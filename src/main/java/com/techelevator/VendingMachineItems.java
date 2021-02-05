@@ -33,8 +33,8 @@ public class VendingMachineItems {
 	}
 	
 	public String getSlotLocation(String input) {
-		String slotLoc = productMap.get(input).getSlotLocation();
-		return slotLoc;
+		String itemSlotLocation = productMap.get(input).getSlotLocation();
+		return itemSlotLocation;
 	}
 	
 	public String getProductName() {
@@ -42,30 +42,26 @@ public class VendingMachineItems {
 	}
 	
 	public String getProductName(String input) {
-		String prodName = productMap.get(input).getProductName();
-		return prodName;
+		String itemProductName = productMap.get(input).getProductName();
+		return itemProductName;
 	}
 	
 	public String getPrice() {
 		return price;
 	}
-	
-<<<<<<< HEAD
-	public String getCategory(String input) {	
-=======
+
 	public String getPrice(String input) {
-		String pri = productMap.get(input).getPrice();
-		return pri;
+		String itemPrice = productMap.get(input).getPrice();
+		return itemPrice;
 	}
 	
 	public String getCategory() {
->>>>>>> f48e3430cef5654db9e220fd1df4c965d214426b
 		return category;
 	}
 	
 	public String getCategory(String input) {
-		String cat = productMap.get(input).getCategory();
-		return cat;
+		String itemCategory = productMap.get(input).getCategory();
+		return itemCategory;
 	}
 	
 	//method to return String "Message according to the README based on the category"
