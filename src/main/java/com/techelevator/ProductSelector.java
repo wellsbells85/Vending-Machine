@@ -28,7 +28,7 @@ public class ProductSelector {
 	public boolean validateSlot(String input) {
 		boolean validate = false;
 		for(String key : inventoryMap.keySet()) {
-			if(key.equals(input)) {
+			if(key.equalsIgnoreCase(input)) {
 				validate = true;
 			} 
 		} return validate;
@@ -37,7 +37,7 @@ public class ProductSelector {
 	//method to decrement inventory correctly
 	public int adjustInventory(String input) {
 		for(String key : inventoryMap.keySet()) {
-			if(key.equals(input) && getInventoryCount(input) > 0) {
+			if(key.equalsIgnoreCase(input) && getInventoryCount(input) > 0) {
 				inventoryCount--;
 			} 
 		} return inventoryCount;
