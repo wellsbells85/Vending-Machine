@@ -14,6 +14,7 @@ public class ProductSelector {
 	private String price;
 	private String category;
 	private int inventoryCount;
+	private boolean validate;
 	private Map<String , Integer> inventoryMap = new LinkedHashMap<>();
 
 	
@@ -21,30 +22,29 @@ public class ProductSelector {
 		
 	}
 	
-	public int getInventoryCount() {
-		return inventoryCount;
+	public int getInventoryCount(String input) {
+		return inventoryMap.get(input);
 	}
+	
+	public boolean validateSlot(String input) {
+		boolean validate = false;
+		for(String key : inventoryMap.keySet()) {
+			if(key.equals(input)) {
+				validate = true;
+			} 
+		} return validate;
+	}
+	
 	
 	//method to decrement inventory correctly
 	public int adjustInventory(String input) {
 		for(String key : inventoryMap.keySet()) {
-			if(key.equals(input) )
-		} //end for-each loop
+			if(key.equals(input) && getInventoryCount(input) > 0) {
+				inventoryCount--;
+			} 
+		} return inventoryCount;
 	} //end method	
 
-		
-	//method to return String "Message according to the README based on the category"
-	public String getCategoryMessage(String input) {
-		if (category.equals("Chip")) {
-			return "Crunch Crunch, Yum!";		
-		} else if (category.equals("Candy")) {
-			return "Munch Munch, Yum!";		
-		}else if (category.equals("Drink")) {
-			return "Glug Glug, Yum!";			
-		}else if (category.equals("Gum")) {
-			return "Chew Chew, Yum!";
-		} else return "";		
-	} //end method
 	
 	//method to create initialize an inventory map of slot location with 5 items each
 	public void initializeInventory() {

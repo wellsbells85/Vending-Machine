@@ -7,23 +7,14 @@ import java.util.Scanner;
 import java.util.LinkedHashMap;
 
 public class VendingMachineItems {
-
-	//getCategoryMessage() method to return String "Message according to the README based on the category"
-	// --> DONE - changed to getCategoryMessage() to not overlap with getCategory() getter
-	
-	//getProductData() method to return String "Slot Name Price(properly formatted if possible)"
-	// --> DONE
-	
-	//****getMethods() for each individual category, then we can combine data later as desired****
-	// --> DONE
-	
-	// I included inventoryCount in the list and made a getter and setter for it.
-	// I also made a purchase method that will automatically reduce the inventoryCount by 1 and return "SOLD OUT" if the amount is 0
 	
 	private String slotLocation;
 	private String productName;
 	private String price;
 	private String category;
+	private String productData;
+	private String productsList;
+	
 	private Map<String , VendingMachineItems> productMap = new LinkedHashMap<>();
 		
 	public VendingMachineItems() {
@@ -37,29 +28,50 @@ public class VendingMachineItems {
 		this.category = category;
 	}
 	
-	public String getSlotLocation() {
+	public String getSlotLocation(String input) {
 		return slotLocation;
 	}
 	
-	public String getProductName() {
+	public String getProductName(String input) {
 		return productName;
 	}
 	
-	public String getPrice() {
+	public String getPrice(String input) {
 		return price;
 	}
 	
-	public String getCategory() {
+	public String getCategory(String input) {
 		return category;
 	}
-		
-	//method to return String "Slot Name Price(properly formatted)"
-	public String getProductData() {
-		String productData = getSlotLocation() + " " + getProductName() + " " + "$" + getPrice() + " ";
-		return productData;
-	}
 	
-	// I'm not sure if this will actually make a new item each time or just overwrite the same item each time because the variable name is the same.
+	//method to return String "Message according to the README based on the category"
+	public String getCategoryMessage(String input) {
+		
+		if (category.equals("Chip")) {
+			return "Crunch Crunch, Yum!";		
+		} else if (category.equals("Candy")) {
+			return "Munch Munch, Yum!";		
+		}else if (category.equals("Drink")) {
+			return "Glug Glug, Yum!";			
+		}else if (category.equals("Gum")) {
+			return "Chew Chew, Yum!";
+		} else return "";		
+	} //end method
+		
+	//method to return String "Slot Name $Price"
+	public String getProductData(String input) {{
+			String productData = getSlotLocation(input) + "\t " + getProductName(input) + "\t\t " + "$" + getPrice(input) + "\n ";
+		}	 return productData;
+	} //end method	
+	
+	//method to produce entire list of products
+	public String displayProducts() {
+		for (String key : productMap.keySet()) {
+			productsList += productMap.get(key).getProductData(key) + "\n";
+		} return productsList;	
+	} //end method
+
+	//method to produce map of Vending Machine Items from the "vendingmachine.csv" file
 	public void initializeVendingMachine() {
 		
 		File vendFile = new File("vendingmachine.csv");
@@ -77,15 +89,5 @@ public class VendingMachineItems {
 			System.out.println("Something went wrong");
 			System.exit(1);
 		}
-	}
-	
-	public String displayProducts() {
-		String contents = "";
-		
-		for (String key : productMap.keySet()) {
-			contents += productMap.get(key).getProductData() + "\n";
-		}
-		return contents;
-	}
-	
-}
+	} //end method	
+} //end class
