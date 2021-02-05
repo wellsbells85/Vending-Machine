@@ -2,11 +2,8 @@ package com.techelevator;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.math.BigDecimal;
-import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
-import java.util.ArrayList;
 import java.util.LinkedHashMap;
 
 public class VendingMachineItems {
@@ -27,7 +24,7 @@ public class VendingMachineItems {
 	private String productName;
 	private String price;
 	private String category;
-	private int inventoryCount;
+//	private int inventoryCount;
 	private Map<String , VendingMachineItems> inventoryMap = new LinkedHashMap<>();
 	
 	public VendingMachineItems() {
@@ -39,7 +36,7 @@ public class VendingMachineItems {
 		this.productName = productName;
 		this.price = price;
 		this.category = category;
-		this.inventoryCount = 5;
+//		this.inventoryCount = 5;
 	}
 	
 	public String getSlotLocation() {
@@ -58,25 +55,25 @@ public class VendingMachineItems {
 		return category;
 	}
 	
-	public int getInventoryCount() {
-		return inventoryCount;
-	}
-	
-	public void setInventoryCount(int inventoryCount) {
-		this.inventoryCount = inventoryCount;
-	}
-	
-	// I have this method return an empty String if he purchase is successful so it won't show up anywhere
-	public String purchase() {
-		int currentInventory = getInventoryCount();
-		
-		if (currentInventory > 0) {
-			this.inventoryCount = currentInventory - 1;
-			return "";
-			
-		} else return "SOLD OUT";
-		
-	}
+//	public int getInventoryCount() {
+//		return inventoryCount;
+//	}
+//	
+//	public void setInventoryCount(int inventoryCount) {
+//		this.inventoryCount = inventoryCount;
+//	}
+//	
+//	// I have this method return an empty String if he purchase is successful so it won't show up anywhere
+//	public String purchase() {
+//		int currentInventory = getInventoryCount();
+//		
+//		if (currentInventory > 0) {
+//			this.inventoryCount = currentInventory - 1;
+//			return "";
+//			
+//		} else return "SOLD OUT";
+//		
+//	}
 	
 	//method to return String "Message according to the README based on the category"
 	public String getCategoryMessage() {
@@ -132,7 +129,7 @@ public class VendingMachineItems {
 		}
 	}
 	
-	public String getVendingContents() {
+	public String displayProducts() {
 		String contents = "";
 		
 		for (String key : inventoryMap.keySet()) {
