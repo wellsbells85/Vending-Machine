@@ -25,6 +25,15 @@ public class ProductSelector {
 		return inventoryMap.get(input);
 	}
 	
+	public String displayInventory() {
+		String inventoryList = "";
+		for (String key : inventoryMap.keySet()) {
+			if (getInventoryCount(key) == 0) {
+				inventoryList += "SOLD OUT";
+			} else inventoryList += getInventoryCount(key) + "\n";
+		} return inventoryList;	
+	} //end method 
+	
 	public boolean validateSlot(String input) {
 		boolean validate = false;
 		for(String key : inventoryMap.keySet()) {
@@ -59,6 +68,14 @@ public class ProductSelector {
 			System.exit(1);
 		}
 	} //end method
+	
+	public String displayProductsAndInventory() {
+		String productAndInventory = "";
+		
+		
+		return productAndInventory;
+	}
+	
 	
 } //end class
 

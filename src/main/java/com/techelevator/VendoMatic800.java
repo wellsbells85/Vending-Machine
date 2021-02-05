@@ -35,7 +35,7 @@ public class VendoMatic800 {
 			userInput = scanner.nextLine();
 			
 			if(userInput.equals("1") ) {
-				System.out.println("\n" + vend.displayProducts());
+				System.out.printf("\n" + vend.displayProducts(), ps.displayInventory());
 			} else if (userInput.equals("2") ) {
 				while(repeat) {
 					System.out.println("\n(1) Feed Money");
@@ -63,7 +63,7 @@ public class VendoMatic800 {
 							System.out.println(vend.getCategoryMessage(input));
 						} 
 					} else if(userInput.equals("3") ) {
-						account.makeChange();
+						System.out.println(account.makeChange());
 						break;
 					}
 				}	

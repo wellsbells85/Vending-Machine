@@ -67,7 +67,7 @@ public class Accountant {
 	public String makeChange() {
 		BigDecimal current = getCurrentMoney();
 		BigDecimal nickel = BigDecimal.valueOf(.05);
-		BigDecimal dime = BigDecimal.valueOf(.10);
+		BigDecimal dime = BigDecimal.valueOf(.1);
 		BigDecimal quarter = BigDecimal.valueOf(.25);
 		BigDecimal[] numberOfNickels;
 		BigDecimal[] numberOfDimes;
@@ -86,7 +86,6 @@ public class Accountant {
 			numberOfDimes = current.divideAndRemainder(dime);
 			remainder = numberOfDimes[1];
 			current = numberOfDimes[1];
-			
 			if (remainder.compareTo(BigDecimal.ZERO) == 0) {
 				returnStatement = "Change is " + numberOfQuarters[0] + " Quarters, and " + numberOfDimes[0] + " Dimes.";
 			
@@ -97,6 +96,7 @@ public class Accountant {
 			}
 		}
 //		writeAudit(); method call
+		this.currentMoney = BigDecimal.ZERO;
 		return returnStatement;
 	}
 
