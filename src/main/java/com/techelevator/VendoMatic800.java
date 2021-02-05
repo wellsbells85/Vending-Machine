@@ -27,6 +27,7 @@ public class VendoMatic800 {
 			System.out.println("(1) Display Vending Machine Items");
 			System.out.println("(2) Purchase");
 			System.out.println("(3) Exit\n");
+			System.out.println(account.displayCurrentMoney());
 			
 			userInput = scanner.nextLine();
 			
@@ -37,17 +38,30 @@ public class VendoMatic800 {
 					System.out.println("\n(1) Feed Money");
 					System.out.println("(2) Select Product");
 					System.out.print("(3) Finish Transaction\n\n");
+					System.out.println(account.displayCurrentMoney());
 					userInput = scanner.nextLine();
 					if(userInput.equals("1") ) {
 						account.feedMoney();
 					} else if(userInput.equals("2") ) {
-						//we need to add the if statement in this block for non-existant product codes
+						//we need to add the if statement in this block for non-existant product codes --> DONE
 						System.out.println("\n" + vend.displayProducts() );
-						System.out.print("\nEnter Product Code: "); 
+						System.out.println("\nEnter Product Code: "); 
+						System.out.println("\n" + account.displayCurrentMoney());
 						String input = scanner.nextLine();
-						ps.purchaseProduct(input);
+						if (ps.validateSlot() == false) {
+							System.out.println("Please make a valid selection.");
+							continue;
+						}
+						if ((ps.getInventoryCount(input) > 0) && (account.getCurrentMoney().compareTo(account.getPrice(input)) > 0)) {
+							account.purchase(input);
+							ps.adjustInventory(input);
+							vend.getProductData(input);
+							vend.getCategoryMessage(input);
+							continue;
+						}
 					} else if(userInput.equals("3") ) {
 						account.makeChange();
+						break;
 					}
 				}	
 			} else if (userInput.equals("3") ) {
