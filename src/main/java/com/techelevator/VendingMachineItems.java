@@ -24,9 +24,8 @@ public class VendingMachineItems {
 	private String productName;
 	private String price;
 	private String category;
-	private int inventoryCount;
-	private Map<String , VendingMachineItems> inventoryMap = new LinkedHashMap<>();
-	
+	private Map<String , VendingMachineItems> productMap = new LinkedHashMap<>();
+		
 	public VendingMachineItems() {
 		
 	}
@@ -36,7 +35,6 @@ public class VendingMachineItems {
 		this.productName = productName;
 		this.price = price;
 		this.category = category;
-		this.inventoryCount = 5;
 	}
 	
 	public String getSlotLocation() {
@@ -54,38 +52,7 @@ public class VendingMachineItems {
 	public String getCategory() {
 		return category;
 	}
-	
-	public int getInventoryCount() {
-		return inventoryCount;
-	}
-	
-	public void setInventoryCount(int inventoryCount) {
-		this.inventoryCount = inventoryCount;
-	}
-	
-	// I have this method return an empty String if he purchase is successful so it won't show up anywhere
-	public String purchase() {
-		int currentInventory = getInventoryCount();
-		if (currentInventory > 0) {
-			this.inventoryCount = currentInventory - 1;
-			return "";		
-		} else return "SOLD OUT";
 		
-	}
-	
-	//method to return String "Message according to the README based on the category"
-	public String getCategoryMessage() {
-		if (category.equals("Chip")) {
-			return "Crunch Crunch, Yum!";		
-		} else if (category.equals("Candy")) {
-			return "Munch Munch, Yum!";		
-		}else if (category.equals("Drink")) {
-			return "Glug Glug, Yum!";			
-		}else if (category.equals("Gum")) {
-			return "Chew Chew, Yum!";
-		} else return "";		
-	}
-	
 	//method to return String "Slot Name Price(properly formatted)"
 	public String getProductData() {
 		String productData = getSlotLocation() + " " + getProductName() + " " + "$" + getPrice() + " ";
@@ -104,7 +71,7 @@ public class VendingMachineItems {
 				data = line.split("\\|");				
 				VendingMachineItems vendItem = new VendingMachineItems(data[0], data[1], data[2], data[3]);				
 				String key = data[0];	
-				inventoryMap.put(key, vendItem);
+				productMap.put(key, vendItem);
 			}			
 		} catch (FileNotFoundException e) {
 			System.out.println("Something went wrong");
@@ -115,8 +82,8 @@ public class VendingMachineItems {
 	public String displayProducts() {
 		String contents = "";
 		
-		for (String key : inventoryMap.keySet()) {
-			contents += inventoryMap.get(key).getProductData() + "\n";
+		for (String key : productMap.keySet()) {
+			contents += productMap.get(key).getProductData() + "\n";
 		}
 		return contents;
 	}

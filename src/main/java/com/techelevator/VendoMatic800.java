@@ -2,6 +2,7 @@ package com.techelevator;
 
 import java.util.Scanner;
 
+
 	//when press 3, run default SalesReport to save it, then exit(0); will exit the program with no errors
 	//displayProducts();  will collect the data from the VendingMachineItems or possibly VendoMatic800 Class
 	//will also redirect user to the PurchaseMenu Class
@@ -40,7 +41,8 @@ public class VendoMatic800 {
 					if(userInput.equals("1") ) {
 						account.feedMoney();
 					} else if(userInput.equals("2") ) {
-						System.out.println(vend.displayProducts() );
+						//we need to add the if statement in this block for non-existant product codes
+						System.out.println("\n" + vend.displayProducts() );
 						System.out.print("\nEnter Product Code: "); 
 						String input = scanner.nextLine();
 						ps.purchaseProduct(input);
