@@ -17,7 +17,6 @@ public class ProductSelector {
 	private boolean validate;
 	private Map<String , Integer> inventoryMap = new LinkedHashMap<>();
 
-	
 	public ProductSelector() {
 		
 	}
@@ -35,7 +34,6 @@ public class ProductSelector {
 		} return validate;
 	}
 	
-	
 	//method to decrement inventory correctly
 	public int adjustInventory(String input) {
 		for(String key : inventoryMap.keySet()) {
@@ -44,7 +42,6 @@ public class ProductSelector {
 			} 
 		} return inventoryCount;
 	} //end method	
-
 	
 	//method to create initialize an inventory map of slot location with 5 items each
 	public void initializeInventory() {

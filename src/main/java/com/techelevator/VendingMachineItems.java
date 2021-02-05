@@ -13,7 +13,7 @@ public class VendingMachineItems {
 	private String price;
 	private String category;
 	private String productData;
-	private String productsList;
+	private String productsList = "";
 	
 	private Map<String , VendingMachineItems> productMap = new LinkedHashMap<>();
 		
@@ -59,9 +59,9 @@ public class VendingMachineItems {
 	} //end method
 		
 	//method to return String "Slot Name $Price"
-	public String getProductData(String input) {{
-			String productData = getSlotLocation(input) + "\t " + getProductName(input) + "\t\t " + "$" + getPrice(input) + "\n ";
-		}	 return productData;
+	public String getProductData(String input) {
+		String productData = getSlotLocation(input) + "\t " + getProductName(input) + "\t\t " + "$" + getPrice(input) + "\n ";
+		return productData;
 	} //end method	
 	
 	//method to produce entire list of products
