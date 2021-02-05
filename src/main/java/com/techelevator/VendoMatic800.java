@@ -55,11 +55,11 @@ public class VendoMatic800 {
 							System.out.println("Please make a valid selection.");
 							continue;
 						}
-						if ((ps.getInventoryCount(input) > 0) && (account.getCurrentMoney().compareTo(account.getPrice(input)) > 0)) {
+						else if ((ps.getInventoryCount(input) > 0) && (account.getCurrentMoney().compareTo(account.getPrice(input)) > 0)) {
 							account.purchase(input);
 							ps.adjustInventory(input);
-							vend.getProductData(input);
-							vend.getCategoryMessage(input);
+							System.out.println(vend.getProductData(input)); // null?
+							System.out.println(vend.getCategoryMessage(input));
 							
 						}
 					} else if(userInput.equals("3") ) {

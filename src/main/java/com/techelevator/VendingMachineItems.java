@@ -28,20 +28,44 @@ public class VendingMachineItems {
 		this.category = category;
 	}
 	
-	public String getSlotLocation(String input) {
+	public String getSlotLocation() {
 		return slotLocation;
 	}
 	
-	public String getProductName(String input) {
+	public String getSlotLocation(String input) {
+		String slotLoc = productMap.get(input).getSlotLocation();
+		return slotLoc;
+	}
+	
+	public String getProductName() {
 		return productName;
 	}
 	
-	public String getPrice(String input) {
+	public String getProductName(String input) {
+		String prodName = productMap.get(input).getProductName();
+		return prodName;
+	}
+	
+	public String getPrice() {
 		return price;
 	}
 	
+<<<<<<< HEAD
 	public String getCategory(String input) {	
+=======
+	public String getPrice(String input) {
+		String pri = productMap.get(input).getPrice();
+		return pri;
+	}
+	
+	public String getCategory() {
+>>>>>>> f48e3430cef5654db9e220fd1df4c965d214426b
 		return category;
+	}
+	
+	public String getCategory(String input) {
+		String cat = productMap.get(input).getCategory();
+		return cat;
 	}
 	
 	//method to return String "Message according to the README based on the category"
@@ -59,15 +83,16 @@ public class VendingMachineItems {
 		
 	//method to return String "Slot Name $Price"
 	public String getProductData(String input) {
-		String productData = getSlotLocation(input) + " " + getProductName(input) + "\t\t " + "$" + getPrice(input) + "\n ";
+		String productData = productMap.get(input).getSlotLocation() + " " + productMap.get(input).getProductName() + "\t\t " + "$" + productMap.get(input).getPrice() + "\n "; ///
 		return productData;
 	} //end method	
 	
 	//method to produce entire list of products
 	public String displayProducts() {
+		String productList = "";
 		for (String key : productMap.keySet()) {
-			productsList += productMap.get(key).getProductData(key) + "\n";
-		} return productsList;	
+			productList += getProductData(key) + "\n";
+		} return productList;	
 	} //end method
 
 	//method to produce map of Vending Machine Items from the "vendingmachine.csv" file
