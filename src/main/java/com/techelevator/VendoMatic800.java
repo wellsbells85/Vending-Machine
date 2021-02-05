@@ -46,7 +46,7 @@ public class VendoMatic800 {
 					if(userInput.equals("1") ) {
 						account.feedMoney();
 					} else if(userInput.equals("2") ) {
-						//we need to add the if statement in this block for non-existant product codes --> DONE
+						//we need to add the if statement in this block for non-existent product codes --> DONE
 						System.out.println("\n" + vend.displayProducts() );
 						System.out.println("\nEnter Product Code: "); 
 						System.out.println("\n" + account.displayCurrentMoney());
