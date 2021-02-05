@@ -44,13 +44,54 @@ public class Accountant {
 		} return currentMoney;
 	}
 
-	public BigDecimal makeChange() {
+	public boolean purchase(String slotSelection) {
+		BigDecimal current = getCurrentMoney();
+		BigDecimal selectionPrice = priceMap.get(slotSelection);
+		
+		if (priceMap.containsKey(slotSelection)) {
+			if (current.compareTo(selectionPrice) < 0) {
+				return false;
+			} else {
+				this.currentMoney = current.subtract(selectionPrice);
+				return true;
+			}
+		} else return false;
+		
+	}
+	public String makeChange() {
 		BigDecimal current = getCurrentMoney();
 		BigDecimal nickel = BigDecimal.valueOf(.05);
 		BigDecimal dime = BigDecimal.valueOf(.10);
 		BigDecimal quarter = BigDecimal.valueOf(.25);
+		BigDecimal[] numberOfNickels;
+		BigDecimal[] numberOfDimes;
+		BigDecimal[] numberOfQuarters;
+		BigDecimal remainder = BigDecimal.valueOf(0);
+		String returnStatement = "";
+		
+		numberOfQuarters = (current.divideAndRemainder(quarter));
+		remainder = numberOfQuarters[1];
+		current = numberOfQuarters[1];
+		
+		if (remainder.compareTo(BigDecimal.ZERO) == 0) {
+			returnStatement = "Change is " + numberOfQuarters[0] + " Quarters.";
+		
+		} else {
+			numberOfDimes = current.divideAndRemainder(dime);
+			remainder = numberOfDimes[1];
+			current = numberOfDimes[1];
+			
+			if (remainder.compareTo(BigDecimal.ZERO) == 0) {
+				returnStatement = "Change is " + numberOfQuarters[0] + " Quarters, and " + numberOfDimes[0] + " Dimes.";
+			
+			} else {
+				numberOfNickels = current.divideAndRemainder(nickel);
+				remainder = numberOfNickels[1];
+				returnStatement = "Change is " + numberOfQuarters[0] + " Quarters, and " + numberOfDimes[0] + " Dimes, and " + numberOfNickels[0] + " Nickels."; 
+			}
+		}
 //		writeAudit(); method call
-		return change;
+		return returnStatement;
 	}
 
 	public void initializePrices() {
