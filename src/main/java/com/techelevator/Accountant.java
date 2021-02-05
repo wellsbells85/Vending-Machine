@@ -24,8 +24,15 @@ public class Accountant {
 		return currentMoney;
 	}
 
-	public void getPrice(String key) {
+	public BigDecimal getPrice(String key) {
 		this.price = priceMap.get(key);
+		return price;
+	}
+	
+	public String displayCurrentMoney() {
+		BigDecimal current = getCurrentMoney();
+		String currentMoneyDisplay = "Current Money Provided: " + NumberFormat.getCurrencyInstance().format(current);	
+		return currentMoneyDisplay;
 	}
 
 	public BigDecimal feedMoney() {
