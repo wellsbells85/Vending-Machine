@@ -48,7 +48,7 @@ public class VendoMatic800 {
 						System.out.println("\nEnter Product Code: "); 
 						System.out.println("\n" + account.displayCurrentMoney());
 						String input = scanner.nextLine();
-						if (ps.validateSlot() == false) {
+						if (ps.validateSlot(input) == false) {
 							System.out.println("Please make a valid selection.");
 							continue;
 						}
