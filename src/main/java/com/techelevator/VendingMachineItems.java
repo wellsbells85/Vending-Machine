@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 
 public class VendingMachineItems {
 
@@ -28,8 +28,11 @@ public class VendingMachineItems {
 	private String price;
 	private String category;
 	private int inventoryCount;
-	private List<VendingMachineItems> vendingMachine = new ArrayList<>();
-	private Map<String , Integer> inventoryMap = new HashMap<>();
+	private Map<String , VendingMachineItems> inventoryMap = new LinkedHashMap<>();
+	
+	public VendingMachineItems() {
+		
+	}
 	
 	public VendingMachineItems(String slotLocation, String productName, String price, String category) {
 		this.slotLocation = slotLocation;
@@ -98,9 +101,9 @@ public class VendingMachineItems {
 	//method to return String "Slot Name Price(properly formatted)"
 	public String getProductData() {
 		String productData = "";
-		productData += getSlotLocation();
-		productData += getProductName();
-		productData += getPrice();
+		productData += getSlotLocation() + " ";
+		productData += getProductName() + " ";
+		productData += "$" + getPrice() + " ";
 		
 		return productData;
 	}
@@ -117,21 +120,25 @@ public class VendingMachineItems {
 				
 				data = line.split("\\|");
 				
-//			VendingMachineItems vendItem = new VendingMachineItems(data[0], data[1], data[2], data[3]);		this is what I started with 
-//			vendingMachine.add(vendItem);
+				VendingMachineItems vendItem = new VendingMachineItems(data[0], data[1], data[2], data[3]);		
 			
-			
-//			String key = data[0] + data[1] + data[2] + data[3];												this one uses the map
-//			inventoryMap.put(key, 5);
-			
-			
+				String key = data[0];	
+				inventoryMap.put(key, vendItem);
 			}
 			
 		} catch (FileNotFoundException e) {
 			System.out.println("Something went wrong");
 			System.exit(1);
 		}
+	}
+	
+	public String getVendingContents() {
+		String contents = "";
 		
+		for (String key : inventoryMap.keySet()) {
+			contents += inventoryMap.get(key).getProductData() + "\n";
+		}
+		return contents;
 	}
 	
 }
