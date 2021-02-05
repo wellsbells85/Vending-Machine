@@ -40,7 +40,7 @@ public class VendingMachineItems {
 		return price;
 	}
 	
-	public String getCategory(String input) {
+	public String getCategory(String input) {	
 		return category;
 	}
 	
