@@ -50,18 +50,18 @@ public class VendoMatic800 {
 						System.out.println("\n" + vend.displayProducts() );
 						System.out.println("\nEnter Product Code: "); 
 						System.out.println("\n" + account.displayCurrentMoney());
-						String input = scanner.nextLine();
+						String input = scanner.nextLine().toUpperCase();
 						if (ps.validateSlot(input) == false) {
 							System.out.println("Please make a valid selection.");
 							continue;
-						}
-						else if ((ps.getInventoryCount(input) > 0) && (account.getCurrentMoney().compareTo(account.getPrice(input)) > 0)) {
+						} else if (ps.getInventoryCount(input) == 0) {
+							System.out.println("SOLD OUT");
+						} else if ((ps.getInventoryCount(input) > 0) && (account.getCurrentMoney().compareTo(account.getPrice(input)) > 0)) {
 							account.purchase(input);
 							ps.adjustInventory(input);
-							System.out.println(vend.getProductData(input)); // null?
+							System.out.println(vend.getProductData(input));
 							System.out.println(vend.getCategoryMessage(input));
-							
-						}
+						} 
 					} else if(userInput.equals("3") ) {
 						account.makeChange();
 						break;

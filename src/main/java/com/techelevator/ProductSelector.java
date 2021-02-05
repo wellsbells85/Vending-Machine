@@ -28,7 +28,7 @@ public class ProductSelector {
 	public boolean validateSlot(String input) {
 		boolean validate = false;
 		for(String key : inventoryMap.keySet()) {
-			if(key.equalsIgnoreCase(input)) {
+			if(inventoryMap.containsKey(input)) {
 				validate = true;
 			} 
 		} return validate;
@@ -36,11 +36,11 @@ public class ProductSelector {
 	
 	//method to decrement inventory correctly
 	public int adjustInventory(String input) {
-		for(String key : inventoryMap.keySet()) {
-			if(key.equalsIgnoreCase(input) && getInventoryCount(input) > 0) {
-				inventoryCount--;
-			} 
-		} return inventoryCount;
+
+		int inventory = inventoryMap.get(input);
+		inventory--;
+		inventoryMap.put(input, inventory);
+		return inventory;
 	} //end method	
 	
 	//method to create initialize an inventory map of slot location with 5 items each
