@@ -12,40 +12,55 @@ public class VendoMatic800 {
 	public static void main(String[] args) {
 		
 		Scanner scanner = new Scanner(System.in);
-		String userPromptInput;
-		
+		Accounting account = new Accounting();
+		ProductSelector ps = new ProductSelector();
 		VendingMachineItems vend = new VendingMachineItems();
+		SalesReport sr = new SalesReport();
+		
 		vend.initializeVendingMachine();
+		String userInput;
+		boolean repeat = true;
 		
-		System.out.println("(1) Display Vending Machine Items");
-		System.out.println("(2) Purchase");
-		System.out.println("(3) Exit");
-		
-		userPromptInput = scanner.nextLine();
-		
-		if(userPromptInput.equals("1") ) {
-			System.out.println(vend.displayProducts());
-		} else if (userPromptInput.equals("2") ) {
+		while(repeat) {
+			System.out.println("(1) Display Vending Machine Items");
+			System.out.println("(2) Purchase");
+			System.out.println("(3) Exit\n");
 			
-		} else if (userPromptInput.equals("3") ) {
-			//call Sales Report
+			userInput = scanner.nextLine();
 			
-			System.exit(0); //exit the program regularly
-		}
+			if(userInput.equals("1") ) {
+				System.out.println("\n" + vend.displayProducts());
+			} else if (userInput.equals("2") ) {
+				while(repeat) {
+					System.out.println("\n(1) Feed Money");
+					System.out.println("(2) Select Product");
+					System.out.print("(3) Finish Transaction\n\n");
+					userInput = scanner.nextLine();
+					if(userInput.equals("1") ) {
+						account.feedMoney();
+					} else if(userInput.equals("2") ) {
+						System.out.println(vend.displayProducts() );
+						System.out.print("\nEnter Product Code: "); 
+						String input = scanner.nextLine();
+						ps.purchaseProduct(input);
+					} else if(userInput.equals("3") ) {
+						account.makeChange();
+					}
+				}	
+			} else if (userInput.equals("3") ) {
+					
+				System.exit(0); //exit the program regularly
+			} else if (userInput.equals("4" )) {
+				//hidden sales report
+			} //end outer if-loop
 		
-		
-		
+		} //end while(repeat) loop
 		
 		
 		//when program starts, tell Audit.java to create it's map based off the last Sales.txt
 		//VendoMatic800 will call VendingMachineItems, will create Map, and Initialize Integer values to 5, only at start of program
 		//can be in a method, or can be a simple initialization of the map
 		//****if don't use a method now, then we need Setters & Getters to move this data around****
-		//create dispenseProduct(get data from SelectProductMenu Class) method that simply removes 1 item from map. 
-		
-		
-		
-		
-	}
-
-}
+		//create dispenseProduct(get data from SelectProductMenu Class) method that simply removes 1 item from map. 			
+	} //end main
+} //end class

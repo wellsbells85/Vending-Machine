@@ -15,46 +15,42 @@ public class Accounting {
 	// Objects, that
 	// when change is given call the Audit class
 	// currentMoneyProvided variable
-
-// in case we want to format currency:	
-//	public static String currencyFormat(BigDecimal n) {
-//	    return NumberFormat.getCurrencyInstance().format(n);
-//	}
-
-	private BigDecimal currentMoney; // = new BigDecimal("5");
-	private BigDecimal price;
+	private BigDecimal currentMoney = BigDecimal.ZERO; 
+	private BigDecimal price = BigDecimal.ZERO;
+	private BigDecimal change = BigDecimal.ZERO;
 	private Map<String, BigDecimal> priceMap = new LinkedHashMap<>();
 
-	public String getCurrentMoney() {
-		return "Current Money Provided: " + NumberFormat.getCurrencyInstance().format(currentMoney);
+	public BigDecimal getCurrentMoney() {
+		return currentMoney;
 	}
 
 	public void getPrice(String key) {
 		this.price = priceMap.get(key);
 	}
 
-	public String feedMoney() {
+	public BigDecimal feedMoney() {
+		
 		Scanner userInput = new Scanner(System.in);
-		System.out.println("Would you like to add $1, $2, $5, or $10?");
-
-		BigDecimal entry = new BigDecimal(userInput.nextLine());
+		System.out.print("\nWould you like to add $1, $2, $5, or $10? ");
+		String input = userInput.nextLine();
+		BigDecimal entry = new BigDecimal(input);
 
 		if (entry.compareTo(BigDecimal.ONE) != 0 && entry.compareTo(BigDecimal.valueOf(2)) != 0
 				&& entry.compareTo(BigDecimal.valueOf(5)) != 0 && entry.compareTo(BigDecimal.TEN) != 0) {
 			System.out.println("Please enter a valid selection choice.");
-		} else
-			currentMoney.add(entry);
-
-		return getCurrentMoney();
+		} else {
+			currentMoney = currentMoney.add(entry);
+			System.out.println("Current Money Provided: " + NumberFormat.getCurrencyInstance().format(currentMoney));	
+		} return currentMoney;
 	}
 
-	public String makeChange() {
-		BigDecimal current = currentMoney;
+	public BigDecimal makeChange() {
+		BigDecimal current = getCurrentMoney();
 		BigDecimal nickel = BigDecimal.valueOf(.05);
 		BigDecimal dime = BigDecimal.valueOf(.10);
 		BigDecimal quarter = BigDecimal.valueOf(.25);
-
-		return getCurrentMoney();
+//		writeAudit(); method call
+		return change;
 	}
 
 	public void initializePrices() {

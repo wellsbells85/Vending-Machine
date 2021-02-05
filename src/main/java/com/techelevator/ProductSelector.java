@@ -1,7 +1,17 @@
 package com.techelevator;
 
-public class SelectProductMenu {
-
+public class ProductSelector {
+	
+	private String slotLocation;
+	
+	public ProductSelector() {
+		
+	}
+	
+	public String purchaseProduct(String input) {
+		
+		
+	}
 	// must display available items (call MainMenu.displayProducts) 
 	// prompt user to enter a code
 	// return errors on invalid or out stock items
