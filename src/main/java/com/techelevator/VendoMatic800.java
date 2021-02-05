@@ -20,6 +20,9 @@ public class VendoMatic800 {
 		AuditWriter aw = new AuditWriter();
 		
 		vend.initializeVendingMachine();
+		ps.initializeInventory();
+		account.initializePrices();
+		
 		String userInput;
 		boolean repeat = true;
 		
@@ -57,7 +60,7 @@ public class VendoMatic800 {
 							ps.adjustInventory(input);
 							vend.getProductData(input);
 							vend.getCategoryMessage(input);
-							continue;
+							
 						}
 					} else if(userInput.equals("3") ) {
 						account.makeChange();

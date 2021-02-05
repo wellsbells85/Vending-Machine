@@ -47,7 +47,6 @@ public class Accountant {
 			System.out.println("Please enter a valid selection choice.");
 		} else {
 			currentMoney = currentMoney.add(entry);
-			System.out.println("Current Money Provided: " + NumberFormat.getCurrencyInstance().format(currentMoney));	
 		} return currentMoney;
 	}
 
