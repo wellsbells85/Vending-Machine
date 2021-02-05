@@ -12,10 +12,11 @@ public class VendoMatic800 {
 	public static void main(String[] args) {
 		
 		Scanner scanner = new Scanner(System.in);
-		Accounting account = new Accounting();
+		Accountant account = new Accountant();
 		ProductSelector ps = new ProductSelector();
 		VendingMachineItems vend = new VendingMachineItems();
 		SalesReport sr = new SalesReport();
+		AuditWriter aw = new AuditWriter();
 		
 		vend.initializeVendingMachine();
 		String userInput;

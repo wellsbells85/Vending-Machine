@@ -8,7 +8,7 @@ import java.util.Scanner;
 import java.util.Map;
 import java.util.LinkedHashMap;
 
-public class Accounting {
+public class Accountant {
 
 	// uses BigDecimal
 	// inputs are Strings when used in correct format, outputs are BigDecimal

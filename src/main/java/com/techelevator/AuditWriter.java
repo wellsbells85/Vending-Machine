@@ -1,6 +1,6 @@
 package com.techelevator;
 
-public class Audit {
+public class AuditWriter {
 	
 	//every time there is any money transaction log it
 	//these come from Accounting.java, SelectProduct.java, and FeedMoneyMenu.java
