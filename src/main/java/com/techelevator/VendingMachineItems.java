@@ -24,7 +24,7 @@ public class VendingMachineItems {
 	private String productName;
 	private String price;
 	private String category;
-//	private int inventoryCount;
+	private int inventoryCount;
 	private Map<String , VendingMachineItems> inventoryMap = new LinkedHashMap<>();
 	
 	public VendingMachineItems() {
@@ -36,7 +36,7 @@ public class VendingMachineItems {
 		this.productName = productName;
 		this.price = price;
 		this.category = category;
-//		this.inventoryCount = 5;
+		this.inventoryCount = 5;
 	}
 	
 	public String getSlotLocation() {
@@ -55,53 +55,40 @@ public class VendingMachineItems {
 		return category;
 	}
 	
-//	public int getInventoryCount() {
-//		return inventoryCount;
-//	}
-//	
-//	public void setInventoryCount(int inventoryCount) {
-//		this.inventoryCount = inventoryCount;
-//	}
-//	
-//	// I have this method return an empty String if he purchase is successful so it won't show up anywhere
-//	public String purchase() {
-//		int currentInventory = getInventoryCount();
-//		
-//		if (currentInventory > 0) {
-//			this.inventoryCount = currentInventory - 1;
-//			return "";
-//			
-//		} else return "SOLD OUT";
-//		
-//	}
+	public int getInventoryCount() {
+		return inventoryCount;
+	}
+	
+	public void setInventoryCount(int inventoryCount) {
+		this.inventoryCount = inventoryCount;
+	}
+	
+	// I have this method return an empty String if he purchase is successful so it won't show up anywhere
+	public String purchase() {
+		int currentInventory = getInventoryCount();
+		if (currentInventory > 0) {
+			this.inventoryCount = currentInventory - 1;
+			return "";		
+		} else return "SOLD OUT";
+		
+	}
 	
 	//method to return String "Message according to the README based on the category"
 	public String getCategoryMessage() {
-		
-		String message = "";
-		
 		if (category.equals("Chip")) {
-			message += "Crunch Crunch, Yum!";
-			
+			return "Crunch Crunch, Yum!";		
 		} else if (category.equals("Candy")) {
-			message += "Munch Munch, Yum!";
-			
+			return "Munch Munch, Yum!";		
 		}else if (category.equals("Drink")) {
-			message += "Glug Glug, Yum!";
-			
+			return "Glug Glug, Yum!";			
 		}else if (category.equals("Gum")) {
-			message += "Chew Chew, Yum!";
-		}
-		return message;
+			return "Chew Chew, Yum!";
+		} else return "";		
 	}
 	
 	//method to return String "Slot Name Price(properly formatted)"
 	public String getProductData() {
-		String productData = "";
-		productData += getSlotLocation() + " ";
-		productData += getProductName() + " ";
-		productData += "$" + getPrice() + " ";
-		
+		String productData = getSlotLocation() + " " + getProductName() + " " + "$" + getPrice() + " ";
 		return productData;
 	}
 	
@@ -113,16 +100,12 @@ public class VendingMachineItems {
 		
 		try (Scanner scanner = new Scanner(vendFile)) {
 			while (scanner.hasNextLine()) {
-				String line = scanner.nextLine();
-				
-				data = line.split("\\|");
-				
-				VendingMachineItems vendItem = new VendingMachineItems(data[0], data[1], data[2], data[3]);		
-			
+				String line = scanner.nextLine();			
+				data = line.split("\\|");				
+				VendingMachineItems vendItem = new VendingMachineItems(data[0], data[1], data[2], data[3]);				
 				String key = data[0];	
 				inventoryMap.put(key, vendItem);
-			}
-			
+			}			
 		} catch (FileNotFoundException e) {
 			System.out.println("Something went wrong");
 			System.exit(1);
