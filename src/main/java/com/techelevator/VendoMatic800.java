@@ -77,7 +77,7 @@ public class VendoMatic800 {
 					}
 				}	
 			} else if (userInput.equals("3") ) {
-					
+				System.out.println(account.makeChange());	
 				System.exit(0); //exit the program regularly
 			} else if (userInput.equals("4" )) {
 				//hidden sales report
