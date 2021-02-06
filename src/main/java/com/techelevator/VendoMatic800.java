@@ -36,6 +36,8 @@ public class VendoMatic800 {
 		vend.initializeVendingMachine();
 		ps.initializeInventory();
 		account.initializePrices();
+		aw.salesMapMaker();
+		aw.masterReportWriter();
 		
 		String userInput;
 		boolean repeat = true;

@@ -47,13 +47,16 @@ public class Accountant {
 		if (input == null || input.equals("")) {
 			return currentMoney;
 		} else {
-			BigDecimal entry = new BigDecimal(input);
-			if (entry.compareTo(BigDecimal.ONE) != 0 && entry.compareTo(BigDecimal.valueOf(2)) != 0
-		
-				&& entry.compareTo(BigDecimal.valueOf(5)) != 0 && entry.compareTo(BigDecimal.TEN) != 0) {
-				System.out.println("Please enter a valid selection choice.");
-			} else {
-				currentMoney = currentMoney.add(entry);
+			try { 
+				BigDecimal entry = new BigDecimal(input);
+				if (entry.compareTo(BigDecimal.ONE) != 0 && entry.compareTo(BigDecimal.valueOf(2)) != 0
+					&& entry.compareTo(BigDecimal.valueOf(5)) != 0 && entry.compareTo(BigDecimal.TEN) != 0) {
+				System.out.println("\nPlease enter a valid selection choice.");
+				} else {
+					currentMoney = currentMoney.add(entry);
+				}	
+			} catch(NumberFormatException e) {
+				System.out.println("\nPlease enter a valid selection choice.");
 			}
 		}
 		String feedMoney = String.format("%1$21s", "FEED MONEY:"); 
@@ -72,8 +75,8 @@ public class Accountant {
 			} else {
 				this.currentMoney = current.subtract(selectionPrice);
 				String name = nameMap.get(slotSelection);
-				aw.masterCopyWriter(name);
-				aw.logWriter( String.format("%1$18s" ,name) + " " + slotSelection + " " + NumberFormat.getCurrencyInstance().format(startingMoney) + " " + NumberFormat.getCurrencyInstance().format(currentMoney));
+				aw.salesMapEditor(name);
+				aw.logWriter( String.format("%1$18s" , name) + " " + slotSelection + " " + NumberFormat.getCurrencyInstance().format(startingMoney) + " " + NumberFormat.getCurrencyInstance().format(currentMoney));
 				return true;
 			}
 		} else return false;
