@@ -3,7 +3,8 @@ package com.techelevator;
 import java.io.File;
 import java.io.IOException;
 import java.util.Scanner;
-
+import java.util.Map;
+import java.util.HashMap;
 
 	//when press 3, run default SalesReport to save it, then exit(0); will exit the program with no errors
 	//displayProducts();  will collect the data from the VendingMachineItems or possibly VendoMatic800 Class
@@ -14,9 +15,14 @@ public class VendoMatic800 {
 
 	public static void main(String[] args) {
 		
-		File fileName = new File("Log.txt"); 
+		File reportName = new File("SalesReportMaster.txt"); 
 		try{
-			fileName.createNewFile(); //write the file
+			reportName.createNewFile(); //write the log file
+			} catch (IOException e) { //			
+		} 
+		File logName = new File("Log.txt"); 
+		try{
+			logName.createNewFile(); //write the log file
 			} catch (IOException e) { //			
 		} 
 			
@@ -24,8 +30,8 @@ public class VendoMatic800 {
 		Accountant account = new Accountant();
 		ProductSelector ps = new ProductSelector();
 		VendingMachineItems vend = new VendingMachineItems();
-		SalesReport sr = new SalesReport();
 		AuditWriter aw = new AuditWriter();
+		Map<String, Integer> salesMap = new HashMap<>();
 		
 		vend.initializeVendingMachine();
 		ps.initializeInventory();
@@ -39,23 +45,21 @@ public class VendoMatic800 {
 			System.out.println("(1) Display Vending Machine Items");
 			System.out.println("(2) Purchase");
 			System.out.println("(3) Exit\n");
-			
-			
 			userInput = scanner.nextLine();
 			
 			if(userInput.equals("1") ) {
-				System.out.println(ps.displayAllVendingData() + "\n");
+				System.out.println(ps.displayAllVendingData() );
 			} else if (userInput.equals("2") ) {
-				while(repeat) {
+				boolean repeatAgain = true;
+				while(repeatAgain) {
 					System.out.println("\n" + account.displayCurrentMoney());
-					System.out.println("(1) Feed Money");
+					System.out.println("\n(1) Feed Money");
 					System.out.println("(2) Select Product");
 					System.out.print("(3) Finish Transaction\n");
 					userInput = scanner.nextLine();
 					if(userInput.equals("1") ) {
 						account.feedMoney();
 					} else if(userInput.equals("2") ) {
-						//we need to add the if statement in this block for non-existent product codes --> DONE
 						System.out.println("\n" + vend.displayProducts() );
 						System.out.println("\nEnter Product Code: "); 
 						System.out.println("\n" + account.displayCurrentMoney());
@@ -68,16 +72,17 @@ public class VendoMatic800 {
 						} else if ((ps.getInventoryCount(input) > 0) && (account.getCurrentMoney().compareTo(account.getPrice(input)) > 0)) {
 							account.purchase(input);
 							ps.adjustInventory(input);
-							System.out.println(vend.getProductData(input));
-							System.out.println(vend.getCategoryMessage(input));
+							//aw.salesMapEditor()    need to pass product name!!!! in paranthesis
+							System.out.print(vend.getProductData(input));
+							System.out.println("  " + vend.getCategoryMessage(input));
 						} 
 					} else if(userInput.equals("3") ) {
 						System.out.println(account.makeChange());
-						break;
+						repeatAgain = !repeatAgain;
 					}
 				}	
 			} else if (userInput.equals("3") ) {
-				System.out.println(account.makeChange());	
+				System.out.println("Thank You! Have a nice Day.");
 				System.exit(0); //exit the program regularly
 			} else if (userInput.equals("4" )) {
 				//hidden sales report

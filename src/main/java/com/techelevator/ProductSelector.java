@@ -11,12 +11,8 @@ import java.util.Scanner;
 
 public class ProductSelector {
 	
-	private String slotLocation;
-	private String productName;
-	private String price;
-	private String category;
 	private int inventoryCount;
-	private boolean validate;
+
 	private Map<String , Integer> inventoryMap = new LinkedHashMap<>();
 	private Map<String , String> nameMap = new LinkedHashMap<>();
 	private Map<String , String> priceMap = new LinkedHashMap<>();
@@ -38,21 +34,19 @@ public class ProductSelector {
 	} //end method 
 	
 	public boolean validateSlot(String input) {
-		boolean validate = false;
 		for(String key : inventoryMap.keySet()) {
 			if(inventoryMap.containsKey(input)) {
-				validate = true;
+				return true;
 			} 
-		} return validate;
+		} return false;
 	}
 	
 	//method to decrement inventory correctly
 	public int adjustInventory(String input) {
-
-		int inventory = inventoryMap.get(input);
-		inventory--;
-		inventoryMap.put(input, inventory);
-		return inventory;
+		inventoryCount = getInventoryCount(input);
+		inventoryCount--;
+		inventoryMap.put(input, inventoryCount);
+		return inventoryCount;
 	} //end method	
 	
 	//method to create initialize an inventory map of slot location with 5 items each

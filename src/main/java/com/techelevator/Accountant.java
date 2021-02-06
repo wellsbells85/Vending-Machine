@@ -56,9 +56,10 @@ public class Accountant {
 				currentMoney = currentMoney.add(entry);
 			}
 		}
-		aw.logWriter("FEED MONEY: " + NumberFormat.getCurrencyInstance().format(startingMoney) + " " + NumberFormat.getCurrencyInstance().format(currentMoney));
+		String feedMoney = String.format("%1$21s", "FEED MONEY:"); 
+		aw.logWriter(feedMoney + " " + NumberFormat.getCurrencyInstance().format(startingMoney) + " " + NumberFormat.getCurrencyInstance().format(currentMoney));
 		return currentMoney;
-	}
+	} //end method
 
 	public boolean purchase(String slotSelection) {
 		BigDecimal startingMoney = getCurrentMoney();
@@ -70,13 +71,13 @@ public class Accountant {
 				return false;
 			} else {
 				this.currentMoney = current.subtract(selectionPrice);
-				aw.logWriter(nameMap.get(slotSelection) + " " + slotSelection + " " + NumberFormat.getCurrencyInstance().format(startingMoney) + " " + NumberFormat.getCurrencyInstance().format(currentMoney));
+				String name = nameMap.get(slotSelection);
+				aw.masterCopyWriter(name);
+				aw.logWriter( String.format("%1$18s" ,name) + " " + slotSelection + " " + NumberFormat.getCurrencyInstance().format(startingMoney) + " " + NumberFormat.getCurrencyInstance().format(currentMoney));
 				return true;
 			}
-		} else
-			return false;
-
-	}
+		} else return false;
+	} //end method
 
 	public String makeChange() {
 		BigDecimal startingMoney = getCurrentMoney();
@@ -92,34 +93,29 @@ public class Accountant {
 
 		if (current.compareTo(BigDecimal.ZERO) == 0) {
 			return "No change necessary.";
-
 		} else {
-			numberOfQuarters = (current.divideAndRemainder(quarter));
+			numberOfQuarters = current.divideAndRemainder(quarter);
 			remainder = numberOfQuarters[1];
 			current = numberOfQuarters[1];
 			if (remainder.compareTo(BigDecimal.ZERO) == 0) {
-
 				returnStatement = "Change is " + numberOfQuarters[0] + " Quarters.";
-
 			} else {
 				numberOfDimes = current.divideAndRemainder(dime);
 				remainder = numberOfDimes[1];
 				current = numberOfDimes[1];
 				if (remainder.compareTo(BigDecimal.ZERO) == 0) {
-					returnStatement = "Change is " + numberOfQuarters[0] + " Quarters, and " + numberOfDimes[0]
-							
-							+ " Dimes.";
-
+					returnStatement = "Change is " + numberOfQuarters[0] + " Quarters, and " + numberOfDimes[0] + " Dimes.";
 				} else {
 					numberOfNickels = current.divideAndRemainder(nickel);
 					remainder = numberOfNickels[1];
 					returnStatement = "Change is " + numberOfQuarters[0] + " Quarters, and " + numberOfDimes[0]
-							+ " Dimes, and " + numberOfNickels[0] + " Nickels.";
-				}
-			}
-		}
+					+ " Dimes, and " + numberOfNickels[0] + " Nickels.";
+				} //end third if-else for nickels
+			} //end second if-else for dimes
+		}//end first if-else for quarters
 		this.currentMoney = BigDecimal.ZERO;
-		aw.logWriter("GIVE CHANGE: " + NumberFormat.getCurrencyInstance().format(startingMoney) + " " + NumberFormat.getCurrencyInstance().format(currentMoney));
+		String giveChange = String.format("%1$21s", "GIVE CHANGE:");
+		aw.logWriter(giveChange + " " + NumberFormat.getCurrencyInstance().format(startingMoney) + " " + NumberFormat.getCurrencyInstance().format(currentMoney));
 		return returnStatement;
 	}
 
@@ -144,7 +140,6 @@ public class Accountant {
 		} catch (FileNotFoundException e) {
 			System.out.println("Something went wrong");
 			System.exit(1);
-		}
-	}
-
-}
+		} //end try-catch
+	} //end method
+} //end class
