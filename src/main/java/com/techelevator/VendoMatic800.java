@@ -36,7 +36,7 @@ public class VendoMatic800 {
 		vend.initializeVendingMachine();
 		ps.initializeInventory();
 		account.initializePrices();
-		aw.salesMapMaker();
+		aw.getSalesMap();
 		aw.masterReportWriter();
 		
 		String userInput;
@@ -74,7 +74,6 @@ public class VendoMatic800 {
 						} else if ((ps.getInventoryCount(input) > 0) && (account.getCurrentMoney().compareTo(account.getPrice(input)) > 0)) {
 							account.purchase(input);
 							ps.adjustInventory(input);
-							//aw.salesMapEditor()    need to pass product name!!!! in paranthesis
 							System.out.print(vend.getProductData(input));
 							System.out.println("  " + vend.getCategoryMessage(input));
 						} 
