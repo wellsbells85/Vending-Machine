@@ -79,13 +79,16 @@ public class VendingMachineItems {
 		
 	//method to return String "Slot Name $Price"
 	public String getProductData(String input) {
-		String productData = productMap.get(input).getSlotLocation() + " " + productMap.get(input).getProductName() + "\t\t " + "$" + productMap.get(input).getPrice() + "\n "; ///
+		String productData = String.format("%1$-6s", productMap.get(input).getSlotLocation()) 
+				+ String.format("%1$-20s", productMap.get(input).getProductName()) 
+				+ "$" + String.format("%1$-5s", productMap.get(input).getPrice()); ///
 		return productData;
 	} //end method	
 	
 	//method to produce entire list of products
 	public String displayProducts() {
-		String productList = "";
+		String productList = "Code       Name           Price\n";
+		productList += "===============================\n";
 		for (String key : productMap.keySet()) {
 			productList += getProductData(key) + "\n";
 		} return productList;	

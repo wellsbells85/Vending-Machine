@@ -1,8 +1,10 @@
 package com.techelevator;
 
+import java.awt.List;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Scanner;
@@ -16,6 +18,8 @@ public class ProductSelector {
 	private int inventoryCount;
 	private boolean validate;
 	private Map<String , Integer> inventoryMap = new LinkedHashMap<>();
+	private Map<String , String> nameMap = new LinkedHashMap<>();
+	private Map<String , String> priceMap = new LinkedHashMap<>();
 
 	public ProductSelector() {
 		
@@ -25,13 +29,12 @@ public class ProductSelector {
 		return inventoryMap.get(input);
 	}
 	
-	public String displayInventory() {
-		String inventoryList = "";
-		for (String key : inventoryMap.keySet()) {
-			if (getInventoryCount(key) == 0) {
-				inventoryList += "SOLD OUT";
-			} else inventoryList += getInventoryCount(key) + "\n";
-		} return inventoryList;	
+	public String displayInventory(String input) {
+		if(getInventoryCount(input) == 0) {
+			return "SOLD OUT";
+		} else {
+			return Integer.toString(getInventoryCount(input));		
+		}
 	} //end method 
 	
 	public boolean validateSlot(String input) {
@@ -60,8 +63,9 @@ public class ProductSelector {
 			while (scanner.hasNextLine()) {
 				String line = scanner.nextLine();
 				data = line.split("\\|");
-				String key = data[0]; //pull first item from string array as the slot location = key
-				inventoryMap.put(key, 5); // initialize an array with 5 items each
+				inventoryMap.put(data[0], 5 ); // initialize an array with 5 items each
+				nameMap.put(data[0], data[1]);
+				priceMap.put(data[0], data[2]);
 			}
 		} catch (FileNotFoundException e) {
 			System.out.println("Something went wrong");
@@ -69,12 +73,24 @@ public class ProductSelector {
 		}
 	} //end method
 	
-	public String displayProductsAndInventory() {
-		String productAndInventory = "";
-		
-		
-		return productAndInventory;
-	}
+	//method to return all string data with updated inventory
+	public String getAllVendingData(String input) {
+		String productData = String.format("%1$-6s", input) + String.format("%1$-20s", nameMap.get(input)) 
+				+ "$" + String.format("%1$-5s", priceMap.get(input)); ///
+		return productData;
+	} //end method	
+
+	//quick call method to display all data easily
+	public String displayAllVendingData() {
+		String productAndInventory = "Code       Name           Price   Quantity\n";
+		productAndInventory += "==========================================\n";
+		for (String key : inventoryMap.keySet()) {
+			productAndInventory += getAllVendingData(key) + "   " + displayInventory(key) + "\n";
+		} return productAndInventory;	
+	} //end method
+
+	
+	
 	
 	
 } //end class

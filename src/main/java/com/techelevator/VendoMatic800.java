@@ -1,5 +1,7 @@
 package com.techelevator;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.Scanner;
 
 
@@ -12,6 +14,12 @@ public class VendoMatic800 {
 
 	public static void main(String[] args) {
 		
+		File fileName = new File("Log.txt"); 
+		try{
+			fileName.createNewFile(); //write the file
+			} catch (IOException e) { //			
+		} 
+			
 		Scanner scanner = new Scanner(System.in);
 		Accountant account = new Accountant();
 		ProductSelector ps = new ProductSelector();
@@ -27,21 +35,22 @@ public class VendoMatic800 {
 		boolean repeat = true;
 		
 		while(repeat) {
+			System.out.println("\n" + account.displayCurrentMoney() + "\n");
 			System.out.println("(1) Display Vending Machine Items");
 			System.out.println("(2) Purchase");
 			System.out.println("(3) Exit\n");
-			System.out.println(account.displayCurrentMoney());
+			
 			
 			userInput = scanner.nextLine();
 			
 			if(userInput.equals("1") ) {
-				System.out.printf("\n" + vend.displayProducts(), ps.displayInventory());
+				System.out.println(ps.displayAllVendingData() + "\n");
 			} else if (userInput.equals("2") ) {
 				while(repeat) {
-					System.out.println("\n(1) Feed Money");
+					System.out.println("\n" + account.displayCurrentMoney());
+					System.out.println("(1) Feed Money");
 					System.out.println("(2) Select Product");
-					System.out.print("(3) Finish Transaction\n\n");
-					System.out.println(account.displayCurrentMoney());
+					System.out.print("(3) Finish Transaction\n");
 					userInput = scanner.nextLine();
 					if(userInput.equals("1") ) {
 						account.feedMoney();
@@ -83,4 +92,7 @@ public class VendoMatic800 {
 		//****if don't use a method now, then we need Setters & Getters to move this data around****
 		//create dispenseProduct(get data from SelectProductMenu Class) method that simply removes 1 item from map. 			
 	} //end main
+	
+
+	
 } //end class
