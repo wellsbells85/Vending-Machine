@@ -13,7 +13,7 @@ import java.io.PrintWriter;
 
 public class AuditWriter {
 	
-	protected Map<String, Integer> salesMap = new HashMap<>();
+	private Map<String, Integer> salesMap = new HashMap<>();
 	private DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("MM/dd/yyyy hh:mm:ss a");
 	private LocalDateTime time = LocalDateTime.now();
 	
@@ -32,7 +32,7 @@ public class AuditWriter {
 			while(fileScanner.hasNextLine()) {
 				String line = fileScanner.nextLine();
 				String[] lineData = line.split("\\|");
-				salesMap.put(lineData[1] , 0);
+				salesMap.put(lineData[1] , 0); //intialize first sales report with names and zero products sold
 			}
 		} catch(Exception e) { //end try-with-resources writer
 			System.out.println("\nThe program was unable to write your file. Sorry.");
@@ -49,10 +49,10 @@ public class AuditWriter {
 			while(fileScanner.hasNextLine()) {
 				String line = fileScanner.nextLine();
 				String[] productCount = line.split("\\|");
-				String product = productCount[0];
+				String productName = productCount[0];
 				String countString = productCount[1];
 				Integer count = (Integer)Integer.parseInt(countString);
-				salesMap.put(product, count);
+				salesMap.put(productName, count);
 			}
 		} catch(Exception e) { //end try-with-resources writer
 			System.out.println("\nThe program was unable to write your file. Sorry.");
@@ -81,6 +81,19 @@ public class AuditWriter {
 			System.exit(1); //end the program with an irregular error
 		}
 	} //end masterCopyWriter method	
+	
+//	public void dateStampedReportWriter()  {
+//		try (PrintWriter writer = new PrintWriter(new FileWriter("SalesReportMaster.txt", false))) {
+//			for(String key : salesMap.keySet()) {
+//				String count = String.valueOf(salesMap.get(key));
+//				String output = key + "|" + count;
+//				writer.println(output);
+//			}	writer.close();		
+//		} catch(IOException e) {
+//			System.out.println("\nThe program was unable to write your file. Sorry.");
+//			System.exit(1); //end the program with an irregular error
+//		}
+//	} //end masterCopyWriter method	
 	
 } //end class	
 
