@@ -84,35 +84,35 @@ public class Accountant {
 
 	public String makeChange() {
 		BigDecimal startingMoney = getCurrentMoney();
-		BigDecimal current = getCurrentMoney();
-		BigDecimal nickel = BigDecimal.valueOf(.05);
-		BigDecimal dime = BigDecimal.valueOf(.1);
-		BigDecimal quarter = BigDecimal.valueOf(.25);
-		BigDecimal[] numberOfNickels;
-		BigDecimal[] numberOfDimes;
-		BigDecimal[] numberOfQuarters;
-		BigDecimal remainder = BigDecimal.valueOf(0);
 		String returnStatement = "";
+		int currentFromBig = getCurrentMoney().intValueExact();
+		int current = currentFromBig * 100;
+		int nickel = 5;
+		int dime = 10;
+		int quarter = 25;
+		int remainder = 0;
+		int numberOfQuarters = 0;
+		int numberOfDimes = 0;
+		int numberOfNickels = 0;
 
-		if (current.compareTo(BigDecimal.ZERO) == 0) {
+		if (current == 0) {
 			return "No change necessary.";
 		} else {
-			numberOfQuarters = current.divideAndRemainder(quarter);
-			remainder = numberOfQuarters[1];
-			current = numberOfQuarters[1];
-			if (remainder.compareTo(BigDecimal.ZERO) == 0) {
-				returnStatement = "Change is " + numberOfQuarters[0] + " Quarters.";
+			remainder = current % quarter;
+			numberOfQuarters = current / quarter;
+			current = current / quarter;
+			if (remainder == 0) {
+				returnStatement = "Change is " + current + " Quarters.";
 			} else {
-				numberOfDimes = current.divideAndRemainder(dime);
-				remainder = numberOfDimes[1];
-				current = numberOfDimes[1];
-				if (remainder.compareTo(BigDecimal.ZERO) == 0) {
-					returnStatement = "Change is " + numberOfQuarters[0] + " Quarters, and " + numberOfDimes[0] + " Dimes.";
+				remainder = current % dime;
+				numberOfDimes = current / dime;
+				current = current / dime;
+				if (remainder == 0) {
+					returnStatement = "Change is " + numberOfQuarters + " Quarters, and " + numberOfDimes + " Dimes.";
 				} else {
-					numberOfNickels = current.divideAndRemainder(nickel);
-					remainder = numberOfNickels[1];
-					returnStatement = "Change is " + numberOfQuarters[0] + " Quarters, and " + numberOfDimes[0]
-					+ " Dimes, and " + numberOfNickels[0] + " Nickels.";
+					numberOfNickels = current / nickel;
+					returnStatement = "Change is " + numberOfQuarters + " Quarters, and " + numberOfDimes
+					+ " Dimes, and " + numberOfNickels + " Nickels.";
 				} //end third if-else for nickels
 			} //end second if-else for dimes
 		}//end first if-else for quarters
