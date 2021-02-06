@@ -60,7 +60,8 @@ public class Accountant {
 			}
 		}
 		String feedMoney = String.format("%1$21s", "FEED MONEY:"); 
-		aw.logWriter(feedMoney + " " + NumberFormat.getCurrencyInstance().format(startingMoney) + " " + NumberFormat.getCurrencyInstance().format(currentMoney));
+		aw.logWriter(feedMoney + " " + String.format("%1$6s", NumberFormat.getCurrencyInstance().format(startingMoney)) 
+			+ String.format("%1$7s", NumberFormat.getCurrencyInstance().format(currentMoney)));
 		return currentMoney;
 	} //end method
 
@@ -76,7 +77,9 @@ public class Accountant {
 				this.currentMoney = current.subtract(selectionPrice);
 				String name = nameMap.get(slotSelection);
 				aw.salesMapEditor(name);
-				aw.logWriter( String.format("%1$18s" , name) + " " + slotSelection + " " + NumberFormat.getCurrencyInstance().format(startingMoney) + " " + NumberFormat.getCurrencyInstance().format(currentMoney));
+				aw.logWriter( String.format("%1$18s" , name) + " " + slotSelection + " " 
+					+ String.format("%1$6s", NumberFormat.getCurrencyInstance().format(startingMoney)) 
+					+ String.format("%1$7s", NumberFormat.getCurrencyInstance().format(currentMoney)));
 				return true;
 			}
 		} else return false;
@@ -118,7 +121,8 @@ public class Accountant {
 		}//end first if-else for quarters
 		this.currentMoney = BigDecimal.ZERO;
 		String giveChange = String.format("%1$21s", "GIVE CHANGE:");
-		aw.logWriter(giveChange + " " + NumberFormat.getCurrencyInstance().format(startingMoney) + " " + NumberFormat.getCurrencyInstance().format(currentMoney));
+		aw.logWriter(giveChange + String.format("%1$6s", NumberFormat.getCurrencyInstance().format(startingMoney))
+			+ String.format("%1$7s", NumberFormat.getCurrencyInstance().format(currentMoney)));
 		return returnStatement;
 	}
 
