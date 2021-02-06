@@ -85,8 +85,8 @@ public class Accountant {
 	public String makeChange() {
 		BigDecimal startingMoney = getCurrentMoney();
 		String returnStatement = "";
-		int currentFromBig = getCurrentMoney().intValueExact();
-		int current = currentFromBig * 100;
+		BigDecimal currentFromBig = getCurrentMoney().multiply(BigDecimal.valueOf(100));
+		int current = currentFromBig.intValueExact();
 		int nickel = 5;
 		int dime = 10;
 		int quarter = 25;
