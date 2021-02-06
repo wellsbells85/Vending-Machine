@@ -15,10 +15,11 @@ public class Accountant {
 	// Objects, that
 	// when change is given call the Audit class
 	// currentMoneyProvided variable
-	private BigDecimal currentMoney = BigDecimal.ZERO; 
+	private BigDecimal currentMoney = BigDecimal.ZERO;
 	private BigDecimal price = BigDecimal.ZERO;
-	private BigDecimal change = BigDecimal.ZERO;
 	private Map<String, BigDecimal> priceMap = new LinkedHashMap<>();
+	private Map<String , String> nameMap = new LinkedHashMap<>();
+	private AuditWriter aw = new AuditWriter();
 
 	public BigDecimal getCurrentMoney() {
 		return currentMoney;
@@ -28,43 +29,57 @@ public class Accountant {
 		this.price = priceMap.get(key);
 		return price;
 	}
-	
+
 	public String displayCurrentMoney() {
 		BigDecimal current = getCurrentMoney();
-		String currentMoneyDisplay = "Current Money Provided: " + NumberFormat.getCurrencyInstance().format(current);	
+		String currentMoneyDisplay = "Current Money Provided: " + NumberFormat.getCurrencyInstance().format(current);
 		return currentMoneyDisplay;
 	}
 
 	public BigDecimal feedMoney() {
-		
+		BigDecimal startingMoney = getCurrentMoney();
+
 		Scanner userInput = new Scanner(System.in);
 		System.out.print("\nWould you like to add $1, $2, $5, or $10? ");
 		String input = userInput.nextLine();
-		BigDecimal entry = new BigDecimal(input);
-
-		if (entry.compareTo(BigDecimal.ONE) != 0 && entry.compareTo(BigDecimal.valueOf(2)) != 0
-				&& entry.compareTo(BigDecimal.valueOf(5)) != 0 && entry.compareTo(BigDecimal.TEN) != 0) {
-			System.out.println("Please enter a valid selection choice.");
+		
+		
+		if (input == null || input.equals("")) {
+			return currentMoney;
 		} else {
-			currentMoney = currentMoney.add(entry);
-		} return currentMoney;
+			BigDecimal entry = new BigDecimal(input);
+			if (entry.compareTo(BigDecimal.ONE) != 0 && entry.compareTo(BigDecimal.valueOf(2)) != 0
+		
+				&& entry.compareTo(BigDecimal.valueOf(5)) != 0 && entry.compareTo(BigDecimal.TEN) != 0) {
+				System.out.println("Please enter a valid selection choice.");
+			} else {
+				currentMoney = currentMoney.add(entry);
+			}
+		}
+		aw.logWriter("FEED MONEY: " + NumberFormat.getCurrencyInstance().format(startingMoney) + " " + NumberFormat.getCurrencyInstance().format(currentMoney));
+		return currentMoney;
 	}
 
 	public boolean purchase(String slotSelection) {
+		BigDecimal startingMoney = getCurrentMoney();
 		BigDecimal current = getCurrentMoney();
 		BigDecimal selectionPrice = priceMap.get(slotSelection);
-		
+
 		if (priceMap.containsKey(slotSelection)) {
 			if (current.compareTo(selectionPrice) < 0) {
 				return false;
 			} else {
 				this.currentMoney = current.subtract(selectionPrice);
+				aw.logWriter(nameMap.get(slotSelection) + " " + slotSelection + " " + NumberFormat.getCurrencyInstance().format(startingMoney) + " " + NumberFormat.getCurrencyInstance().format(currentMoney));
 				return true;
 			}
-		} else return false;
-		
+		} else
+			return false;
+
 	}
+
 	public String makeChange() {
+		BigDecimal startingMoney = getCurrentMoney();
 		BigDecimal current = getCurrentMoney();
 		BigDecimal nickel = BigDecimal.valueOf(.05);
 		BigDecimal dime = BigDecimal.valueOf(.1);
@@ -74,29 +89,37 @@ public class Accountant {
 		BigDecimal[] numberOfQuarters;
 		BigDecimal remainder = BigDecimal.valueOf(0);
 		String returnStatement = "";
-		
-		numberOfQuarters = (current.divideAndRemainder(quarter));
-		remainder = numberOfQuarters[1];
-		current = numberOfQuarters[1];
-		
-		if (remainder.compareTo(BigDecimal.ZERO) == 0) {
-			returnStatement = "Change is " + numberOfQuarters[0] + " Quarters.";
-		
+
+		if (current.compareTo(BigDecimal.ZERO) == 0) {
+			return "No change necessary.";
+
 		} else {
-			numberOfDimes = current.divideAndRemainder(dime);
-			remainder = numberOfDimes[1];
-			current = numberOfDimes[1];
+			numberOfQuarters = (current.divideAndRemainder(quarter));
+			remainder = numberOfQuarters[1];
+			current = numberOfQuarters[1];
 			if (remainder.compareTo(BigDecimal.ZERO) == 0) {
-				returnStatement = "Change is " + numberOfQuarters[0] + " Quarters, and " + numberOfDimes[0] + " Dimes.";
-			
+
+				returnStatement = "Change is " + numberOfQuarters[0] + " Quarters.";
+
 			} else {
-				numberOfNickels = current.divideAndRemainder(nickel);
-				remainder = numberOfNickels[1];
-				returnStatement = "Change is " + numberOfQuarters[0] + " Quarters, and " + numberOfDimes[0] + " Dimes, and " + numberOfNickels[0] + " Nickels."; 
+				numberOfDimes = current.divideAndRemainder(dime);
+				remainder = numberOfDimes[1];
+				current = numberOfDimes[1];
+				if (remainder.compareTo(BigDecimal.ZERO) == 0) {
+					returnStatement = "Change is " + numberOfQuarters[0] + " Quarters, and " + numberOfDimes[0]
+							
+							+ " Dimes.";
+
+				} else {
+					numberOfNickels = current.divideAndRemainder(nickel);
+					remainder = numberOfNickels[1];
+					returnStatement = "Change is " + numberOfQuarters[0] + " Quarters, and " + numberOfDimes[0]
+							+ " Dimes, and " + numberOfNickels[0] + " Nickels.";
+				}
 			}
 		}
-//		writeAudit(); method call
 		this.currentMoney = BigDecimal.ZERO;
+		aw.logWriter("GIVE CHANGE: " + NumberFormat.getCurrencyInstance().format(startingMoney) + " " + NumberFormat.getCurrencyInstance().format(currentMoney));
 		return returnStatement;
 	}
 
@@ -115,6 +138,7 @@ public class Accountant {
 
 				String key = data[0];
 				priceMap.put(key, price);
+				nameMap.put(key, data[1]);
 			}
 
 		} catch (FileNotFoundException e) {
