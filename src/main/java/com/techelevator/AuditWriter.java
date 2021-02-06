@@ -13,7 +13,7 @@ import java.io.PrintWriter;
 
 public class AuditWriter {
 	
-	private Map<String, Integer> salesMap = new HashMap<>();
+	protected Map<String, Integer> salesMap = new HashMap<>();
 	private DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("MM/dd/yyyy hh:mm:ss a");
 	private LocalDateTime time = LocalDateTime.now();
 	
@@ -24,14 +24,6 @@ public class AuditWriter {
 		} catch(IOException e) {
 		System.exit(1); //end the program with an irregular error
 		}
-	}
-	
-	public Map<String, Integer> getSalesMap() {
-		return salesMap;
-	} 
-	
-	public void setSalesMap(Map<String, Integer> salesMap) {
-		this.salesMap = salesMap;
 	}
 	
 	public void salesReportInitializer() {
@@ -48,7 +40,7 @@ public class AuditWriter {
 		} //end try-catch	
 	}
 	
-	public void salesMapMaker() {
+	public Map<String, Integer> getSalesMap() {
 		File salesReport = new File("SalesReportMaster.txt");
 		try(Scanner fileScanner = new Scanner(salesReport)) {
 			if(salesReport.length() == 0) {
@@ -58,19 +50,23 @@ public class AuditWriter {
 				String line = fileScanner.nextLine();
 				String[] productCount = line.split("\\|");
 				String product = productCount[0];
-				Integer count = Integer.parseInt(productCount[1]);
+				String countString = productCount[1];
+				Integer count = (Integer)Integer.parseInt(countString);
 				salesMap.put(product, count);
 			}
 		} catch(Exception e) { //end try-with-resources writer
 			System.out.println("\nThe program was unable to write your file. Sorry.");
 			System.exit(1); //end the program with an irregular error
-		} //end try-catch	
+		} //end try-catch
+		return salesMap;
 	} //end salesArray method
 	
 	public void salesMapEditor(String product) {
-		Integer count = getSalesMap().get(product);
-		count = count + 1;
-		salesMap.put(product, count);		
+		this.salesMap = getSalesMap();
+		Integer count = salesMap.get(product);
+		count++;
+		salesMap.put(product, count);
+		masterReportWriter();
 	} //end editor method
 	
 	public void masterReportWriter()  {

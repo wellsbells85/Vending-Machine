@@ -1,4 +1,4 @@
-Stackers|0
+Stackers|2
 Cowtales|0
 Cola|0
 Heavy|0
