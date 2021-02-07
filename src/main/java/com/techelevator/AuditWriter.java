@@ -15,7 +15,7 @@ import java.math.BigDecimal;
 public class AuditWriter {
 	
 	private Map<String, Integer> salesMap = new HashMap<>();
-	private BigDecimal totalSales = BigDecimal.ZERO;
+	private BigDecimal totalSales;
 	private BigDecimal newSales = BigDecimal.ZERO;
 	private BigDecimal oldSales;
 	private DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("MM/dd/yyyy hh:mm:ss a");
@@ -85,13 +85,42 @@ public class AuditWriter {
 		masterReportWriter();
 	} //end editor method
 	
-	public void setNewSales(BigDecimal newSales) {
-		this.newSales = newSales;
+	public void setNewSales(BigDecimal input) {
+		newSales = newSales.add(input);
+	}
+	
+	public BigDecimal getNewSales() {
+		return newSales;
+	}
+	
+	public void setTotalSales(BigDecimal totalSales) {
+		this.totalSales = totalSales;
 	}
 	
 	public BigDecimal getTotalSales() {
-		totalSales = oldSales.add(newSales);
+		totalSales = getOldSales().add(getNewSales());
 		return totalSales;
+	}
+	
+	public BigDecimal getOldSales() {
+		File salesReport = new File("SalesReportMaster.txt");
+		try(Scanner fileScanner = new Scanner(salesReport)) {
+			while(fileScanner.hasNextLine()) {
+				String line = fileScanner.nextLine();
+				if(!line.matches(".*[\\|].*")) {
+					String[] salesHistory = line.split("$");
+					if(salesHistory.length == 1) {
+						oldSales = new BigDecimal(0);// there will be no value after the $ the first time the file is read, this avoids a NullPointerException later
+					} else {
+						String price = salesHistory[1];
+						oldSales = new BigDecimal(price);				
+					}
+				} 
+			}
+		} catch(Exception e) { //end try-with-resources writer
+			System.out.println("\nThe program was unable to write your file. Sorry. SECONDNOTE");
+			System.exit(1); //end the program with an irregular error
+		} return oldSales;//end try-catch
 	}
 	
 	public void masterReportWriter()  {
