@@ -105,13 +105,13 @@ public class Accountant {
 		} else {
 			remainder = current % quarter;
 			numberOfQuarters = current / quarter;
-			current = current / quarter;
+			current = current - numberOfQuarters * quarter;
 			if (remainder == 0) {
 				returnStatement = "Change is " + current + " Quarters.";
 			} else {
 				remainder = current % dime;
 				numberOfDimes = current / dime;
-				current = current / dime;
+				current = current - numberOfDimes * dime;
 				if (remainder == 0) {
 					returnStatement = "Change is " + numberOfQuarters + " Quarters, and " + numberOfDimes + " Dimes.";
 				} else {
