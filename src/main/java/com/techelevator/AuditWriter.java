@@ -17,6 +17,8 @@ public class AuditWriter {
 	private Map<String, Integer> salesMap = new HashMap<>();
 	private BigDecimal totalSales;
 	private DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("MM/dd/yyyy hh:mm:ss a");
+	private DateTimeFormatter stampDate = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+	private DateTimeFormatter stampTime = DateTimeFormatter.ofPattern("HHmmss");
 	private LocalDateTime time = LocalDateTime.now();
 	
 	public void logWriter(String message) {
@@ -59,7 +61,7 @@ public class AuditWriter {
 				} else { //if statement to only pull pipe delimited data
 					String[] salesHistory = line.split("$");
 					if(salesHistory.length == 1) {
-						BigDecimal totals = BigDecimal.ZERO;
+						BigDecimal totals = new BigDecimal(0);
 						setTotalSales(totals); // there will be no value after the $ the first time the file is read, this avoids a NullPointerException later
 					} else {
 						String price = salesHistory[1];
@@ -91,7 +93,6 @@ public class AuditWriter {
 		return totalSales;
 	}
 	
-	
 	public void masterReportWriter()  {
 		try (PrintWriter writer = new PrintWriter(new FileWriter("SalesReportMaster.txt", false))) {
 			for(String key : salesMap.keySet()) {
@@ -100,28 +101,33 @@ public class AuditWriter {
 				writer.println(output);
 			}	
 			writer.printf("%1$10s", "TOTAL: $");
-			writer.printf(getTotalSales().toString() );
-			writer.close();		
+			writer.printf(getTotalSales().toString() );	
 		} catch(IOException e) {
 			System.out.println("\nThe program was unable to write your file. Sorry! NOTE");
 			System.exit(1); //end the program with an irregular error
 		}
 	} //end masterReportWriter method	
 	
-//	public void dateStampedReportWriter()  {
-//		String fileName = dateFormatter.format(time) + ""
-//		
-//		try (PrintWriter writer = new PrintWriter(new FileWriter(datedFileName, false ))) {
-//			for(String key : salesMap.keySet()) {
-//				String count = String.valueOf(salesMap.get(key));
-//				String output = key + "|" + count;
-//				writer.println(output);
-//			}	writer.close();		
-//		} catch(IOException e) {
-//			System.out.println("\nThe program was unable to write your file. Sorry.");
-//			System.exit(1); //end the program with an irregular error
-//		}
-//	} //end masterCopyWriter method	
+	public void dateStampedReportWriter()  {
+		String fileName = stampDate.format(time) + "T" + stampTime.format(time) + " SalesReport.txt";
+		File reportName = new File(fileName); 
+		try{
+			reportName.createNewFile(); //write the log file
+		} catch (IOException e) { //
+			System.out.println("Was unable to create the file.");
+			System.exit(1); //end the program with an irregular error
+		}
+
+		try (Scanner fileScanner = new Scanner("SalesReportMaster.txt"); PrintWriter writer = new PrintWriter(new FileWriter(reportName, true))) {
+			while(fileScanner.hasNextLine()) {
+				String line = fileScanner.nextLine();
+				writer.println(line);
+			} 
+		} catch(Exception e) { //end try-with-resources writer
+				System.out.println("\nThere was an unforeseen issue. We must close the application.");
+				System.exit(1); //end the program with an irregular error
+			}  //end try-catch			
+	} //end dateStampedReportWriter method	
 	
 } //end class	
 

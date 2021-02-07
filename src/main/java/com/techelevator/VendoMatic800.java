@@ -86,7 +86,7 @@ public class VendoMatic800 {
 				System.out.println("Thank You! Have a nice Day.");
 				System.exit(0); //exit the program regularly
 			} else if (userInput.equals("4" )) {
-				//hidden sales report
+				aw.dateStampedReportWriter(); //hidden sales report
 			} //end outer if-loop
 		
 		} //end while(repeat) loop
