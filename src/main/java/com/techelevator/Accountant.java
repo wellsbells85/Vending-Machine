@@ -17,6 +17,7 @@ public class Accountant {
 	// currentMoneyProvided variable
 	private BigDecimal currentMoney = BigDecimal.ZERO;
 	private BigDecimal price = BigDecimal.ZERO;
+	private BigDecimal oldSales;
 	private Map<String, BigDecimal> priceMap = new LinkedHashMap<>();
 	private Map<String , String> nameMap = new LinkedHashMap<>();
 	private AuditWriter aw = new AuditWriter();
@@ -76,6 +77,7 @@ public class Accountant {
 			} else {
 				this.currentMoney = current.subtract(selectionPrice);
 				String name = nameMap.get(slotSelection);
+				aw.setTotalSales(selectionPrice);
 				aw.salesMapEditor(name);
 				aw.logWriter( String.format("%1$18s" , name) + " " + slotSelection  
 					+ String.format("%1$7s", NumberFormat.getCurrencyInstance().format(startingMoney)) 
@@ -125,7 +127,7 @@ public class Accountant {
 			+ String.format("%1$7s", NumberFormat.getCurrencyInstance().format(currentMoney)));
 		return returnStatement;
 	}
-
+	
 	public void initializePrices() {
 
 		File vendFile = new File("vendingmachine.csv");
