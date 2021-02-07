@@ -6,7 +6,6 @@ import java.util.Map;
 import java.util.Scanner;
 import java.time.LocalDateTime;    
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -15,9 +14,9 @@ import java.math.BigDecimal;
 public class AuditWriter {
 	
 	private Map<String, Integer> salesMap = new HashMap<>();
-	private BigDecimal totalSales;
+	private BigDecimal totalSales = new BigDecimal(0);
+	private	BigDecimal oldSales = BigDecimal.ZERO;
 	private BigDecimal newSales = BigDecimal.ZERO;
-	private BigDecimal oldSales;
 	private DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("MM/dd/yyyy hh:mm:ss a");
 	private DateTimeFormatter stampDate = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 	private DateTimeFormatter stampTime = DateTimeFormatter.ofPattern("HHmmss");
@@ -60,15 +59,7 @@ public class AuditWriter {
 					String countString = productCount[1];
 					Integer count = (Integer)Integer.parseInt(countString);
 					salesMap.put(productName, count);
-				} else { //if statement to only pull pipe delimited data
-					String[] salesHistory = line.split("$");
-					if(salesHistory.length == 1) {
-						oldSales = new BigDecimal(0);// there will be no value after the $ the first time the file is read, this avoids a NullPointerException later
-					} else {
-						String price = salesHistory[1];
-						oldSales = new BigDecimal(price);				
-					}
-				}			
+				} 	
 			}
 		} catch(Exception e) { //end try-with-resources writer
 			System.out.println("\nThe program was unable to write your file. Sorry. SECONDNOTE");
@@ -77,38 +68,13 @@ public class AuditWriter {
 		return salesMap;
 	} //end salesArray method
 	
-	public void salesMapEditor(String product) {
-		this.salesMap = getSalesMap();
-		Integer count = salesMap.get(product);
-		count++;
-		salesMap.put(product, count);
-		masterReportWriter();
-	} //end editor method
-	
-	public void setNewSales(BigDecimal input) {
-		newSales = newSales.add(input);
-	}
-	
-	public BigDecimal getNewSales() {
-		return newSales;
-	}
-	
-	public void setTotalSales(BigDecimal totalSales) {
-		this.totalSales = totalSales;
-	}
-	
-	public BigDecimal getTotalSales() {
-		totalSales = getOldSales().add(getNewSales());
-		return totalSales;
-	}
-	
 	public BigDecimal getOldSales() {
 		File salesReport = new File("SalesReportMaster.txt");
 		try(Scanner fileScanner = new Scanner(salesReport)) {
 			while(fileScanner.hasNextLine()) {
 				String line = fileScanner.nextLine();
-				if(!line.matches(".*[\\|].*")) {
-					String[] salesHistory = line.split("$");
+				if(!line.matches(".*[\\|].*") && !line.isEmpty()) {
+					String[] salesHistory = line.split("\\$");
 					if(salesHistory.length == 1) {
 						oldSales = new BigDecimal(0);// there will be no value after the $ the first time the file is read, this avoids a NullPointerException later
 					} else {
@@ -123,14 +89,36 @@ public class AuditWriter {
 		} return oldSales;//end try-catch
 	}
 	
+	public void salesMapEditor(String product) {
+		this.salesMap = getSalesMap();
+		Integer count = salesMap.get(product);
+		count++;
+		salesMap.put(product, count);
+		masterReportWriter();
+	} //end editor method
+	
+	public void setNewSales(BigDecimal input) {
+		this.newSales = input;
+	}
+	
+	public BigDecimal getNewSales() {
+		return newSales;
+	}
+	
+	public BigDecimal getTotalSales() {
+		BigDecimal old = getOldSales();
+		return old.add(getNewSales());	 
+	}
+	
 	public void masterReportWriter()  {
 		try (PrintWriter writer = new PrintWriter(new FileWriter("SalesReportMaster.txt", false))) {
 			for(String key : salesMap.keySet()) {
 				String count = String.valueOf(salesMap.get(key));
 				String output = key + "|" + count;
 				writer.println(output);
-			}	
-			writer.printf("%1$10s", "TOTAL: $");
+			}
+			writer.println();
+			writer.printf("TOTALS: $");
 			writer.printf(getTotalSales().toString() );	
 		} catch(IOException e) {
 			System.out.println("\nThe program was unable to write your file. Sorry! NOTE");

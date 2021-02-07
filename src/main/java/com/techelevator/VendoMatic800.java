@@ -2,6 +2,7 @@ package com.techelevator;
 
 import java.io.File;
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.util.Scanner;
 import java.util.Map;
 import java.util.HashMap;
@@ -31,12 +32,13 @@ public class VendoMatic800 {
 		ProductSelector ps = new ProductSelector();
 		VendingMachineItems vend = new VendingMachineItems();
 		AuditWriter aw = new AuditWriter();
-		Map<String, Integer> salesMap = new HashMap<>();
 		
 		vend.initializeVendingMachine();
 		ps.initializeInventory();
 		account.initializePrices();
 		aw.getSalesMap();
+		aw.getOldSales();
+		aw.setNewSales(BigDecimal.ZERO);
 		aw.masterReportWriter();
 		
 		String userInput;

@@ -1,17 +1,18 @@
-Stackers|10
-Cowtales|0
+Stackers|7
+Cowtales|5
 Cola|0
-Heavy|0
-Cloud Popcorn|3
-Dr. Salt|0
-Little League Chew|1
+Heavy|5
+Cloud Popcorn|15
+Dr. Salt|3
+Little League Chew|2
 Wonka Bar|0
-Crunchie|1
-Moonpie|1
-Potato Crisps|1
-Triplemint|4
+Crunchie|0
+Moonpie|5
+Potato Crisps|3
+Triplemint|11
 Mountain Melter|1
-U-Chews|0
-Grain Waves|1
-Chiclets|2
-  TOTAL: $6.80
+U-Chews|2
+Grain Waves|10
+Chiclets|1
+
+TOTALS: $9.00
