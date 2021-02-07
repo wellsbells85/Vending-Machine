@@ -1,5 +1,5 @@
 Stackers|7
-Cowtales|5
+Cowtales|6
 Cola|1
 Heavy|8
 Cloud Popcorn|15
@@ -8,11 +8,11 @@ Little League Chew|7
 Wonka Bar|0
 Crunchie|0
 Moonpie|5
-Potato Crisps|3
-Triplemint|16
-Mountain Melter|2
+Potato Crisps|4
+Triplemint|17
+Mountain Melter|3
 U-Chews|5
 Grain Waves|10
 Chiclets|6
 
-TOTALS: $32.55
+TOTALS: $39.35

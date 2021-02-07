@@ -66,15 +66,19 @@ public class VendingMachineItems {
 	
 	//method to return String "Message according to the README based on the category"
 	public String getCategoryMessage(String input) {
-		if (getCategory(input).equals("Chip")) {
-			return "\"Crunch Crunch, Yum!\"";		
-		} else if (getCategory(input).equals("Candy")) {
-			return "\"Munch Munch, Yum!\"";		
-		}else if (getCategory(input).equals("Drink")) {
-			return "\"Glug Glug, Yum!\"";			
-		}else if (getCategory(input).equals("Gum")) {
-			return "\"Chew Chew, Yum!\"";
-		} else return "";		
+		if (input == null || input.equals("")) {
+			return "";
+		} else {
+			if (getCategory(input).equals("Chip")) {
+				return "\"Crunch Crunch, Yum!\"";		
+			} else if (getCategory(input).equals("Candy")) {
+				return "\"Munch Munch, Yum!\"";		
+			}else if (getCategory(input).equals("Drink")) {
+				return "\"Glug Glug, Yum!\"";			
+			}else if (getCategory(input).equals("Gum")) {
+				return "\"Chew Chew, Yum!\"";
+			} else return "";
+		}			
 	} //end method
 		
 	//method to return String "Slot Name $Price"
