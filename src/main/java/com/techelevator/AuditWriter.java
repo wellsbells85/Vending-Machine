@@ -117,8 +117,9 @@ public class AuditWriter {
 			System.out.println("Was unable to create the file.");
 			System.exit(1); //end the program with an irregular error
 		}
-
-		try (Scanner fileScanner = new Scanner("SalesReportMaster.txt"); PrintWriter writer = new PrintWriter(new FileWriter(reportName, true))) {
+		
+		File input = new File("SalesReportMaster.txt");
+		try (Scanner fileScanner = new Scanner(input); PrintWriter writer = new PrintWriter(new FileWriter(reportName, true))) {
 			while(fileScanner.hasNextLine()) {
 				String line = fileScanner.nextLine();
 				writer.println(line);
