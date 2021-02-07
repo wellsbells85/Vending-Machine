@@ -77,7 +77,7 @@ public class Accountant {
 			} else {
 				this.currentMoney = current.subtract(selectionPrice);
 				String name = nameMap.get(slotSelection);
-				aw.setTotalSales(selectionPrice);
+				aw.setNewSales(selectionPrice);
 				aw.salesMapEditor(name);
 				aw.logWriter( String.format("%1$18s" , name) + " " + slotSelection  
 					+ String.format("%1$7s", NumberFormat.getCurrencyInstance().format(startingMoney)) 

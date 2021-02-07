@@ -15,7 +15,9 @@ import java.math.BigDecimal;
 public class AuditWriter {
 	
 	private Map<String, Integer> salesMap = new HashMap<>();
-	private BigDecimal totalSales;
+	private BigDecimal totalSales = BigDecimal.ZERO;
+	private BigDecimal newSales = BigDecimal.ZERO;
+	private BigDecimal oldSales;
 	private DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("MM/dd/yyyy hh:mm:ss a");
 	private DateTimeFormatter stampDate = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 	private DateTimeFormatter stampTime = DateTimeFormatter.ofPattern("HHmmss");
@@ -61,12 +63,10 @@ public class AuditWriter {
 				} else { //if statement to only pull pipe delimited data
 					String[] salesHistory = line.split("$");
 					if(salesHistory.length == 1) {
-						BigDecimal totals = new BigDecimal(0);
-						setTotalSales(totals); // there will be no value after the $ the first time the file is read, this avoids a NullPointerException later
+						oldSales = new BigDecimal(0);// there will be no value after the $ the first time the file is read, this avoids a NullPointerException later
 					} else {
 						String price = salesHistory[1];
-						BigDecimal oldSales = new BigDecimal(price);
-						setTotalSales(oldSales);				
+						oldSales = new BigDecimal(price);				
 					}
 				}			
 			}
@@ -85,11 +85,12 @@ public class AuditWriter {
 		masterReportWriter();
 	} //end editor method
 	
-	public void setTotalSales(BigDecimal sales) {
-		this.totalSales = sales;
+	public void setNewSales(BigDecimal newSales) {
+		this.newSales = newSales;
 	}
 	
 	public BigDecimal getTotalSales() {
+		totalSales = oldSales.add(newSales);
 		return totalSales;
 	}
 	

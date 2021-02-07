@@ -2,11 +2,11 @@ Stackers|10
 Cowtales|0
 Cola|0
 Heavy|0
-Cloud Popcorn|1
+Cloud Popcorn|3
 Dr. Salt|0
-Little League Chew|0
+Little League Chew|1
 Wonka Bar|0
-Crunchie|0
+Crunchie|1
 Moonpie|0
 Potato Crisps|0
 Triplemint|0
@@ -14,4 +14,4 @@ Mountain Melter|0
 U-Chews|0
 Grain Waves|1
 Chiclets|0
-  TOTAL: $0
+  TOTAL: $0.95
