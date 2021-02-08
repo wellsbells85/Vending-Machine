@@ -10,7 +10,7 @@ public class ProductSelectorTest {
 	
 	@Before
 	public void setup() {
-		ps = new ProductSelector();
+		ps = new ProductSelector(); 
 	}
 
 	@Test
@@ -59,7 +59,7 @@ public class ProductSelectorTest {
 	}
 	
 	@Test
-	public void validateSlot_returns_false_when_there_are_items_in_stock() {
+	public void validateSlot_returns_false_when_the_items_are_not_in_stock() {
 		//Arrange
 		String slotA3 = "A3";
 		String slotB4 = "B4";

@@ -71,7 +71,9 @@ public class VendoMatic800 {
 							ps.adjustInventory(input);
 							System.out.print(vend.getProductData(input));
 							System.out.println("  " + vend.getCategoryMessage(input));
-						} 
+						} else if ((account.getCurrentMoney().compareTo(account.getPrice(input)) < 0)) {
+							System.out.println("Insufficient Funds");
+						}
 					} else if(userInput.equals("3") ) {
 						System.out.println(account.makeChange());
 						repeatAgain = !repeatAgain;
@@ -85,5 +87,5 @@ public class VendoMatic800 {
 			} //end outer if-loop
 		
 		} //end while(repeat) loop		
-	} //end main
+	} //end main 
 } //end class

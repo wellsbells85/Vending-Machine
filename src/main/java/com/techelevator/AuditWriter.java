@@ -33,7 +33,7 @@ public class AuditWriter {
 	
 	public void salesReportInitializer() {
 		File salesReport = new File("vendingmachine.csv");
-		try(Scanner fileScanner = new Scanner(salesReport)){
+		try(Scanner fileScanner = new Scanner(salesReport)){ 
 			while(fileScanner.hasNextLine()) {
 				String line = fileScanner.nextLine();
 				String[] lineData = line.split("\\|");

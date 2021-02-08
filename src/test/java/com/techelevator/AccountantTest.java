@@ -11,8 +11,6 @@ import org.junit.Test;
 public class AccountantTest {
 	
 	private Accountant account;
-	private Map<String, BigDecimal> priceMap = new LinkedHashMap<>();
-	private BigDecimal currentMoney;
 	
 	/*
 	 * When running these tests, the tester should select 5, 2, 10, and 5 for the feedMoney prompts in the console.
