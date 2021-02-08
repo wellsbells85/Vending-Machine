@@ -14,7 +14,6 @@ import java.math.BigDecimal;
 public class AuditWriter {
 	
 	private Map<String, Integer> salesMap = new HashMap<>();
-	private BigDecimal totalSales = new BigDecimal(0);
 	private	BigDecimal oldSales = BigDecimal.ZERO;
 	private BigDecimal newSales = BigDecimal.ZERO;
 	private DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("MM/dd/yyyy hh:mm:ss a");
@@ -37,7 +36,7 @@ public class AuditWriter {
 			while(fileScanner.hasNextLine()) {
 				String line = fileScanner.nextLine();
 				String[] lineData = line.split("\\|");
-				salesMap.put(lineData[1] , 0); //intialize first sales report with names and zero products sold
+				salesMap.put(lineData[1] , 0); //intialize first sales report with names and 0 products sold
 			}
 		} catch(Exception e) { //end try-with-resources writer
 			System.out.println("\nThe program was unable to write your file. Sorry.");
