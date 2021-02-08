@@ -145,7 +145,7 @@ public class AccountantTest {
 	public void makeChange_returns_correct_format_and_answer_when_change_is_made() {
 		//Arrange
 		String slotSelection = "A2";
-		String expectedResult = "Change is 14 Quarters, and 0 Dimes, and 1 Nickels.";
+		String expectedResult = "Change is 14 Quarters and 1 Nickel.";
 		account.feedMoney(); // tester should select 5
 		
 		//Act

@@ -107,18 +107,48 @@ public class Accountant {
 			numberOfQuarters = current / quarter;
 			current = current - numberOfQuarters * quarter;
 			if (remainder == 0) {
-				returnStatement = "Change is " + numberOfQuarters + " Quarters.";
+				if(numberOfQuarters == 1) {
+					returnStatement = "Change is 1 Quarter.";
+				} else {
+					returnStatement = "Change is " + numberOfQuarters + " Quarters.";
+				} // end all possible quarter only return statements	
 			} else {
-				
 				remainder = current % dime;
 				numberOfDimes = current / dime;
 				current = current - numberOfDimes * dime;
 				if (remainder == 0) {
-					returnStatement = "Change is " + numberOfQuarters + " Quarters, and " + numberOfDimes + " Dimes.";
+					if(numberOfQuarters == 0 && numberOfDimes == 1) {
+						returnStatement = "Change is 1 Dime.";
+					} else if(numberOfQuarters == 0 && numberOfDimes > 1) {
+						returnStatement = "Change is " + numberOfDimes + " Dimes.";
+					} else if(numberOfQuarters == 1 && numberOfDimes == 1) {
+						returnStatement = "Change is 1 Quarter and 1 Dime.";
+					} else if(numberOfQuarters > 1 && numberOfDimes == 1) {
+						returnStatement = "Change is " + numberOfQuarters + " Quarters and 1 Dime";
+					} else {
+						returnStatement = "Change is " + numberOfQuarters + " Quarters and " + numberOfDimes + " Dimes.";
+					} // end all possible quarter and dime return situations
+					
 				} else {
-					numberOfNickels = current / nickel;
-					returnStatement = "Change is " + numberOfQuarters + " Quarters, and " + numberOfDimes
-					+ " Dimes, and " + numberOfNickels + " Nickels.";
+					if(numberOfQuarters == 0 && numberOfDimes == 0) {
+						returnStatement = "Change is 1 Nickel.";
+					} else if(numberOfQuarters == 1 && numberOfDimes == 0) {
+						returnStatement = "Change is 1 Quarter and 1 Nickel.";	
+					} else if(numberOfQuarters > 1 && numberOfDimes == 0) {
+						returnStatement = "Change is " + numberOfQuarters + " Quarters and 1 Nickel.";
+					} else if(numberOfQuarters == 0 && numberOfDimes == 1) {
+						returnStatement = "Change is 1 Dime and 1 Nickel.";	
+					} else if(numberOfQuarters == 0 && numberOfDimes > 1) {
+						returnStatement = "Change is " + numberOfDimes + " Dimes and 1 Nickel.";
+					} else if(numberOfQuarters == 1 && numberOfDimes == 1) {
+						returnStatement = "Change is 1 Quarter, 1 Dime, and 1 Nickel.";	
+					}else if(numberOfQuarters == 1 && numberOfDimes > 1) {
+						returnStatement = "Change is 1 Quarter, " + numberOfDimes + " Dimes, and 1 Nickel.";	
+					} else if(numberOfQuarters > 1 && numberOfDimes == 1) {
+						returnStatement = "Change is " + numberOfQuarters + " Quarters, 1 Dime, and 1 Nickel.";
+					} else {
+						returnStatement = "Change is " + numberOfQuarters + " Quarters, " + numberOfDimes + " Dimes, and 1 Nickel.";
+					} 
 				} //end third if-else for nickels
 			} //end second if-else for dimes
 		}//end first if-else for quarters
