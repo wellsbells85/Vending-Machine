@@ -4,15 +4,15 @@ Cola|1
 Heavy|8
 Cloud Popcorn|15
 Dr. Salt|9
-Little League Chew|7
-Wonka Bar|0
+Little League Chew|8
+Wonka Bar|3
 Crunchie|0
 Moonpie|10
-Potato Crisps|4
+Potato Crisps|5
 Triplemint|23
 Mountain Melter|3
 U-Chews|5
 Grain Waves|15
 Chiclets|6
 
-TOTAL SALES: $82.80
+TOTAL SALES: $91.30

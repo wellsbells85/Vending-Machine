@@ -107,8 +107,9 @@ public class Accountant {
 			numberOfQuarters = current / quarter;
 			current = current - numberOfQuarters * quarter;
 			if (remainder == 0) {
-				returnStatement = "Change is " + current + " Quarters.";
+				returnStatement = "Change is " + numberOfQuarters + " Quarters.";
 			} else {
+				
 				remainder = current % dime;
 				numberOfDimes = current / dime;
 				current = current - numberOfDimes * dime;
