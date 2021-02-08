@@ -118,7 +118,7 @@ public class AuditWriter {
 				writer.println(output);
 			}
 			writer.println();
-			writer.printf("TOTALS: $");
+			writer.printf("TOTAL SALES: $");
 			writer.printf(getTotalSales().toString() );	
 		} catch(IOException e) {
 			System.out.println("\nThe program was unable to write your file. Sorry! NOTE");
@@ -149,7 +149,3 @@ public class AuditWriter {
 	} //end dateStampedReportWriter method	
 	
 } //end class	
-
-
-
-

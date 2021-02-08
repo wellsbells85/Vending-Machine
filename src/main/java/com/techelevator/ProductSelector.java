@@ -1,10 +1,7 @@
 package com.techelevator;
 
-import java.awt.List;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Scanner;
