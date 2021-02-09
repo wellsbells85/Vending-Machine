@@ -12,8 +12,6 @@ public class VendingMachineItems {
 	private String productName;
 	private String price;
 	private String category;
-	private String productData;
-	private String productsList = "";
 
 	private Map<String, VendingMachineItems> productMap = new LinkedHashMap<>();
 

@@ -92,13 +92,11 @@ public class Accountant {
 		String returnStatement = "";
 		BigDecimal currentFromBig = getCurrentMoney().multiply(BigDecimal.valueOf(100));
 		int current = currentFromBig.intValueExact();
-		int nickel = 5;
 		int dime = 10;
 		int quarter = 25;
 		int remainder = 0;
 		int numberOfQuarters = 0;
 		int numberOfDimes = 0;
-		int numberOfNickels = 0;
 
 		if (current == 0) {
 			return "No change necessary.";

@@ -19,7 +19,7 @@ public class VendoMatic800 {
 			logName.createNewFile(); //write the log file
 			} catch (IOException e) { //			
 		} 
-			
+		
 		Scanner scanner = new Scanner(System.in);
 		Accountant account = new Accountant();
 		ProductSelector ps = new ProductSelector();
