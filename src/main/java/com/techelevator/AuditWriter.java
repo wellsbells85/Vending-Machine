@@ -19,9 +19,10 @@ public class AuditWriter {
 	private DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("MM/dd/yyyy hh:mm:ss a");
 	private DateTimeFormatter stampDate = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 	private DateTimeFormatter stampTime = DateTimeFormatter.ofPattern("HHmmss");
-	private LocalDateTime time = LocalDateTime.now();
+
 	
 	public void logWriter(String message) {
+		LocalDateTime time = LocalDateTime.now();
 		try (PrintWriter writer = new PrintWriter(new FileWriter("Log.txt", true ))) { // changed this to true so it adds to the list in the file
 			writer.println(dateFormatter.format(time) + " " + message);
 			writer.close();		
@@ -126,6 +127,7 @@ public class AuditWriter {
 	} //end masterReportWriter method	
 	
 	public void dateStampedReportWriter()  {
+		LocalDateTime time = LocalDateTime.now();
 		String fileName = stampDate.format(time) + "T" + stampTime.format(time) + " SalesReport.txt";
 		File reportName = new File(fileName); 
 		try{
