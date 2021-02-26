@@ -62,7 +62,7 @@ public class AuditWriter {
 				} 	
 			}
 		} catch(Exception e) { //end try-with-resources writer
-			System.out.println("\nThe program was unable to write your file. Sorry. SECONDNOTE");
+			System.out.println("\nThe program was unable to write your file. Sorry. ");
 			System.exit(1); //end the program with an irregular error
 		} //end try-catch
 		return salesMap;
@@ -84,7 +84,7 @@ public class AuditWriter {
 				} 
 			}
 		} catch(Exception e) { //end try-with-resources writer
-			System.out.println("\nThe program was unable to write your file. Sorry. SECONDNOTE");
+			System.out.println("\nThe program was unable to write your file. Sorry. ");
 			System.exit(1); //end the program with an irregular error
 		} return oldSales;//end try-catch
 	}
@@ -116,14 +116,14 @@ public class AuditWriter {
 				String count = String.valueOf(salesMap.get(key));
 				String output = key + "|" + count;
 				writer.println(output);
-			}
+			} //end for loop
 			writer.println();
 			writer.printf("TOTAL SALES: $");
 			writer.printf(getTotalSales().toString() );	
 		} catch(IOException e) {
-			System.out.println("\nThe program was unable to write your file. Sorry! NOTE");
+			System.out.println("\nThe program was unable to write your file. Sorry!");
 			System.exit(1); //end the program with an irregular error
-		}
+		} //end try-catch
 	} //end masterReportWriter method	
 	
 	public void dateStampedReportWriter()  {
@@ -142,7 +142,7 @@ public class AuditWriter {
 			while(fileScanner.hasNextLine()) {
 				String line = fileScanner.nextLine();
 				writer.println(line);
-			} 
+			} //end for
 		} catch(Exception e) { //end try-with-resources writer
 				System.out.println("\nThere was an unforeseen issue. We must close the application.");
 				System.exit(1); //end the program with an irregular error

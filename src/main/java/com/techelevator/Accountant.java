@@ -18,7 +18,7 @@ public class Accountant {
 	private BigDecimal currentMoney = BigDecimal.ZERO;
 	private BigDecimal price = BigDecimal.ZERO;
 	private Map<String, BigDecimal> priceMap = new LinkedHashMap<>();
-	private Map<String , String> nameMap = new LinkedHashMap<>();
+	private Map<String, String> nameMap = new LinkedHashMap<>();
 	private AuditWriter aw = new AuditWriter();
 
 	public BigDecimal getCurrentMoney() {
@@ -32,7 +32,8 @@ public class Accountant {
 
 	public String displayCurrentMoney() {
 		BigDecimal current = getCurrentMoney();
-		String currentMoneyDisplay = "Current Money Provided: " + NumberFormat.getCurrencyInstance().format(current);
+		String currentMoneyDisplay = "Current Money Provided:"
+				+ String.format("%1$8s", NumberFormat.getCurrencyInstance().format(current));
 		return currentMoneyDisplay;
 	}
 
@@ -40,30 +41,28 @@ public class Accountant {
 		BigDecimal startingMoney = getCurrentMoney();
 
 		Scanner userInput = new Scanner(System.in);
-		System.out.print("\nWould you like to add $1, $2, $5, or $10? ");
 		String input = userInput.nextLine();
-		
-		
+
 		if (input == null || input.equals("")) {
 			return currentMoney;
 		} else {
-			try { 
+			try {
 				BigDecimal entry = new BigDecimal(input);
 				if (entry.compareTo(BigDecimal.ONE) != 0 && entry.compareTo(BigDecimal.valueOf(2)) != 0
-					&& entry.compareTo(BigDecimal.valueOf(5)) != 0 && entry.compareTo(BigDecimal.TEN) != 0) {
-				System.out.println("\nPlease enter a valid selection choice.");
+						&& entry.compareTo(BigDecimal.valueOf(5)) != 0 && entry.compareTo(BigDecimal.TEN) != 0) {
+					System.out.println("\nPlease enter a valid selection choice.");
 				} else {
 					currentMoney = currentMoney.add(entry);
-				}	
-			} catch(NumberFormatException e) {
+				}
+			} catch (NumberFormatException e) {
 				System.out.println("\nPlease enter a valid selection choice.");
 			}
 		}
-		String feedMoney = String.format("%1$21s", "FEED MONEY:"); 
-		aw.logWriter(feedMoney + String.format("%1$7s", NumberFormat.getCurrencyInstance().format(startingMoney)) 
-			+ String.format("%1$7s", NumberFormat.getCurrencyInstance().format(currentMoney)));
+		String feedMoney = String.format("%1$21s", "FEED MONEY:");
+		aw.logWriter(feedMoney + String.format("%1$8s", NumberFormat.getCurrencyInstance().format(startingMoney))
+				+ String.format("%1$8s", NumberFormat.getCurrencyInstance().format(currentMoney)));
 		return currentMoney;
-	} //end method
+	} // end method
 
 	public boolean purchase(String slotSelection) {
 		BigDecimal startingMoney = getCurrentMoney();
@@ -79,13 +78,14 @@ public class Accountant {
 				aw.getOldSales();
 				aw.setNewSales(selectionPrice);
 				aw.salesMapEditor(name);
-				aw.logWriter( String.format("%1$18s" , name) + " " + slotSelection  
-					+ String.format("%1$7s", NumberFormat.getCurrencyInstance().format(startingMoney)) 
-					+ String.format("%1$7s", NumberFormat.getCurrencyInstance().format(currentMoney)));
+				aw.logWriter(String.format("%1$18s", name) + " " + slotSelection
+						+ String.format("%1$8s", NumberFormat.getCurrencyInstance().format(startingMoney))
+						+ String.format("%1$8s", NumberFormat.getCurrencyInstance().format(currentMoney)));
 				return true;
 			}
-		} else return false;
-	} //end method
+		} else
+			return false;
+	} // end method
 
 	public String makeChange() {
 		BigDecimal startingMoney = getCurrentMoney();
@@ -105,58 +105,60 @@ public class Accountant {
 			numberOfQuarters = current / quarter;
 			current = current - numberOfQuarters * quarter;
 			if (remainder == 0) {
-				if(numberOfQuarters == 1) {
+				if (numberOfQuarters == 1) {
 					returnStatement = "Change is 1 Quarter.";
 				} else {
 					returnStatement = "Change is " + numberOfQuarters + " Quarters.";
-				} // end all possible quarter only return statements	
+				} // end all possible quarter only return statements
 			} else {
 				remainder = current % dime;
 				numberOfDimes = current / dime;
 				current = current - numberOfDimes * dime;
 				if (remainder == 0) {
-					if(numberOfQuarters == 0 && numberOfDimes == 1) {
+					if (numberOfQuarters == 0 && numberOfDimes == 1) {
 						returnStatement = "Change is 1 Dime.";
-					} else if(numberOfQuarters == 0 && numberOfDimes > 1) {
+					} else if (numberOfQuarters == 0 && numberOfDimes > 1) {
 						returnStatement = "Change is " + numberOfDimes + " Dimes.";
-					} else if(numberOfQuarters == 1 && numberOfDimes == 1) {
+					} else if (numberOfQuarters == 1 && numberOfDimes == 1) {
 						returnStatement = "Change is 1 Quarter and 1 Dime.";
-					} else if(numberOfQuarters > 1 && numberOfDimes == 1) {
+					} else if (numberOfQuarters > 1 && numberOfDimes == 1) {
 						returnStatement = "Change is " + numberOfQuarters + " Quarters and 1 Dime";
 					} else {
-						returnStatement = "Change is " + numberOfQuarters + " Quarters and " + numberOfDimes + " Dimes.";
+						returnStatement = "Change is " + numberOfQuarters + " Quarters and " + numberOfDimes
+								+ " Dimes.";
 					} // end all possible quarter and dime return situations
-					
+
 				} else {
-					if(numberOfQuarters == 0 && numberOfDimes == 0) {
+					if (numberOfQuarters == 0 && numberOfDimes == 0) {
 						returnStatement = "Change is 1 Nickel.";
-					} else if(numberOfQuarters == 1 && numberOfDimes == 0) {
-						returnStatement = "Change is 1 Quarter and 1 Nickel.";	
-					} else if(numberOfQuarters > 1 && numberOfDimes == 0) {
+					} else if (numberOfQuarters == 1 && numberOfDimes == 0) {
+						returnStatement = "Change is 1 Quarter and 1 Nickel.";
+					} else if (numberOfQuarters > 1 && numberOfDimes == 0) {
 						returnStatement = "Change is " + numberOfQuarters + " Quarters and 1 Nickel.";
-					} else if(numberOfQuarters == 0 && numberOfDimes == 1) {
-						returnStatement = "Change is 1 Dime and 1 Nickel.";	
-					} else if(numberOfQuarters == 0 && numberOfDimes > 1) {
+					} else if (numberOfQuarters == 0 && numberOfDimes == 1) {
+						returnStatement = "Change is 1 Dime and 1 Nickel.";
+					} else if (numberOfQuarters == 0 && numberOfDimes > 1) {
 						returnStatement = "Change is " + numberOfDimes + " Dimes and 1 Nickel.";
-					} else if(numberOfQuarters == 1 && numberOfDimes == 1) {
-						returnStatement = "Change is 1 Quarter, 1 Dime, and 1 Nickel.";	
-					}else if(numberOfQuarters == 1 && numberOfDimes > 1) {
-						returnStatement = "Change is 1 Quarter, " + numberOfDimes + " Dimes, and 1 Nickel.";	
-					} else if(numberOfQuarters > 1 && numberOfDimes == 1) {
+					} else if (numberOfQuarters == 1 && numberOfDimes == 1) {
+						returnStatement = "Change is 1 Quarter, 1 Dime, and 1 Nickel.";
+					} else if (numberOfQuarters == 1 && numberOfDimes > 1) {
+						returnStatement = "Change is 1 Quarter, " + numberOfDimes + " Dimes, and 1 Nickel.";
+					} else if (numberOfQuarters > 1 && numberOfDimes == 1) {
 						returnStatement = "Change is " + numberOfQuarters + " Quarters, 1 Dime, and 1 Nickel.";
 					} else {
-						returnStatement = "Change is " + numberOfQuarters + " Quarters, " + numberOfDimes + " Dimes, and 1 Nickel.";
-					} 
-				} //end third if-else for nickels
-			} //end second if-else for dimes
-		}//end first if-else for quarters
+						returnStatement = "Change is " + numberOfQuarters + " Quarters, " + numberOfDimes
+								+ " Dimes, and 1 Nickel.";
+					}
+				} // end third if-else for nickels
+			} // end second if-else for dimes
+		} // end first if-else for quarters
 		this.currentMoney = BigDecimal.ZERO;
 		String giveChange = String.format("%1$21s", "GIVE CHANGE:");
-		aw.logWriter(giveChange + String.format("%1$7s", NumberFormat.getCurrencyInstance().format(startingMoney))
-			+ String.format("%1$7s", NumberFormat.getCurrencyInstance().format(currentMoney)));
+		aw.logWriter(giveChange + String.format("%1$8s", NumberFormat.getCurrencyInstance().format(startingMoney))
+				+ String.format("%1$8s", NumberFormat.getCurrencyInstance().format(currentMoney)));
 		return returnStatement;
 	}
-	
+
 	public void initializePrices() {
 
 		File vendFile = new File("vendingmachine.csv");
@@ -178,6 +180,6 @@ public class Accountant {
 		} catch (FileNotFoundException e) {
 			System.out.println("Something went wrong");
 			System.exit(1);
-		} //end try-catch
-	} //end method
-} //end class
+		} // end try-catch
+	} // end method
+} // end class
