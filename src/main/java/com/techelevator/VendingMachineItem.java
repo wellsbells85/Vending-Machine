@@ -40,9 +40,25 @@ public class VendingMachineItem {
 	public String getName() {
 		return name;
 	}
+	
+	public String getName(String slot) {
+		for (VendingMachineItem product : productData) {
+			if(product.getSlot().equals(slot)) {
+				return product.getName();
+			}
+		} return "";
+	}
 
 	public String getPrice() {
 		return price;
+	}
+	
+	public String getPrice(String slot) {
+		for (VendingMachineItem product : productData) {
+			if(product.getSlot().equals(slot)) {
+				return product.getPrice();
+			}	
+		} return "";
 	}
 
 	public String getCategory() {

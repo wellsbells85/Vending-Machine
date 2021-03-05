@@ -9,10 +9,10 @@ Crunchie|0
 Cola|0
 Dr. Salt|0
 Mountain Melter|0
-Heavy|5
+Heavy|0
 U-Chews|0
 Little League Chew|0
 Chiclets|0
 Triplemint|5
 
-TOTAL SALES: $21.00
+TOTAL SALES: $13.50
