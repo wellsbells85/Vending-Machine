@@ -1,154 +1,320 @@
-//package com.techelevator;
-//
-//import java.math.BigDecimal;
-//import java.util.LinkedHashMap;
-//import java.util.Map;
-//
-//import org.junit.Assert;
-//import org.junit.Before;
-//import org.junit.Test;
-//
-//public class AccountantTest {
-//	
-//	private Accountant account;
-//	
-//	/*
-//	 * When running these tests, the tester should select 5, 2, 10, and 5 for the feedMoney prompts in the console.
-//	 */
-//	
-//
-//
-//	@Test
-//	public void initializePrices_creates_a_LinkedHashMap_with_correct_price_data_inside() {
-//		//Arrange
-//		String slotA1 = "A1";
-//		String slotB3 = "B3";
-//		String slotC4 = "C4";
-//		String slotD2 = "D2";
-//		BigDecimal expectedA1Price = new BigDecimal("3.05");
-//		BigDecimal expectedB3Price = new BigDecimal("1.50");
-//		BigDecimal expectedC4Price = new BigDecimal("1.50");
-//		BigDecimal expectedD2Price = new BigDecimal("0.95");
-//				
-//		//Act
-//		BigDecimal resultSlotA1 = account.getPrice(slotA1);
-//		BigDecimal resultSlotB3 = account.getPrice(slotB3);
-//		BigDecimal resultSlotC4 = account.getPrice(slotC4);
-//		BigDecimal resultSlotD2 = account.getPrice(slotD2);
-//				
-//		//Assert
-//		Assert.assertEquals(expectedA1Price, resultSlotA1);
-//		Assert.assertEquals(expectedB3Price, resultSlotB3);
-//		Assert.assertEquals(expectedC4Price, resultSlotC4);
-//		Assert.assertEquals(expectedD2Price, resultSlotD2);
-//	}
-//	
-//	@Test
-//	public void feedMoney_adds_the_correct_amount_of_money_to_currentMoney() {
-//		//Arrange
-//		BigDecimal expectedResult = new BigDecimal("5");
-//		account.feedMoney(); // tester should select 5
-//		
-//		//Act
-//		BigDecimal result = account.getCurrentMoney(); 
-//		
-//		//Assert
-//		Assert.assertEquals(expectedResult, result);
-//	}
-//	
-//	@Test
-//	public void displayCurrentMoney_return_correct_format_and_answer_when_nothing_has_been_added() {
-//		//Arrange
-//		String expectedResult = "Current Money Provided: $0.00";
-//		
-//		
-//		//Act
-//		String result = account.displayCurrentMoney(); 
-//		
-//		//Assert
-//		Assert.assertEquals(expectedResult, result);
-//	}
-//	
-//	@Test
-//	public void displayCurrentMoney_return_correct_format_and_answer_when_2_dollars_have_been_added() {
-//		//Arrange
-//		String expectedResult = "Current Money Provided: $2.00";
-//		account.feedMoney(); // tester should select 2
-//		
-//		//Act
-//		String result = account.displayCurrentMoney(); 
-//		
-//		//Assert
-//		Assert.assertEquals(expectedResult, result);
-//	}
-//	
-//	@Test
-//	public void purchase_returns_false_if_there_are_not_enough_funds_for_the_item() {
-//		//Arrange
-//		String slotA3 = "A3";
-//		String slotB1 = "B1";
-//		String slotC2 = "C2";
-//		String slotD4 = "D4";
-//		
-//		//Act
-//		boolean resultA3 = account.purchase(slotA3); 
-//		boolean resultB1 = account.purchase(slotB1); 
-//		boolean resultC2 = account.purchase(slotC2); 
-//		boolean resultD4 = account.purchase(slotD4); 
-//		
-//		//Assert
-//		Assert.assertFalse("Purchase shuld have returned false with insufficient funds.", resultA3);
-//		Assert.assertFalse("Purchase shuld have returned false with insufficient funds.", resultB1);
-//		Assert.assertFalse("Purchase shuld have returned false with insufficient funds.", resultC2);
-//		Assert.assertFalse("Purchase shuld have returned false with insufficient funds.", resultD4);
-//	}
-//	
-//	@Test
-//	public void purchase_returns_true_if_there_is_enough_funds_for_the_item() {
-//		//Arrange
-//		String slotA3 = "A3";
-//		String slotB1 = "B1";
-//		String slotC2 = "C2";
-//		String slotD4 = "D4";
-//		account.feedMoney(); //tester should select 10
-//		
-//		//Act
-//		boolean resultA3 = account.purchase(slotA3); 
-//		boolean resultB1 = account.purchase(slotB1); 
-//		boolean resultC2 = account.purchase(slotC2); 
-//		boolean resultD4 = account.purchase(slotD4); 
-//		
-//		//Assert
-//		Assert.assertTrue("Purchase shuld have returned true with sufficient funds.a", resultA3);
-//		Assert.assertTrue("Purchase shuld have returned true with sufficient funds.b", resultB1);
-//		Assert.assertTrue("Purchase shuld have returned true with sufficient funds.c", resultC2);
-//		Assert.assertTrue("Purchase shuld have returned true with sufficient funds.d", resultD4);
-//	}
-//	
-//	@Test
-//	public void makeChange_returns_no_change_necessary_when_current_money_is_0() {
-//		//Arrange
-//		String expectedResult = "No change necessary.";
-//		
-//		//Act
-//		String result = account.makeChange(); 
-//		
-//		//Assert
-//		Assert.assertEquals(expectedResult, result);
-//	}
-//	
-//	@Test
-//	public void makeChange_returns_correct_format_and_answer_when_change_is_made() {
-//		//Arrange
-//		String slotSelection = "A2";
-//		String expectedResult = "Change is 14 Quarters and 1 Nickel.";
-//		account.feedMoney(); // tester should select 5
-//		
-//		//Act
-//		account.purchase(slotSelection);
-//		String result = account.makeChange(); 
-//		
-//		//Assert
-//		Assert.assertEquals(expectedResult, result);
-//	}
-//}
+package com.techelevator;
+
+import java.math.BigDecimal;
+import java.util.LinkedHashMap;
+import java.util.Map;
+
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
+
+public class AccountantTest {
+	
+
+	private Accountant account;
+	private Map<String, String[]> result;
+	
+	@Before
+	public void createAccountant() {
+		account = new Accountant();
+	}
+	
+	@After
+	public void clearAccountant() {
+		account.makeChange();
+	}
+		
+	@Test
+	public void check_funds_valids_both_paths_correctly() {
+		Assert.assertFalse(account.checkFunds("2.00"));
+		account.feedMoney("2");
+		Assert.assertTrue(account.checkFunds("2.00"));
+	}
+	
+	@Test
+	public void display_current_money_functions_correctly() {
+		Assert.assertEquals("Current Money Provided:   $0.00", account.displayCurrentMoney());
+		//Arrange
+		account.feedMoney("1");
+		Assert.assertEquals("Current Money Provided:   $1.00", account.displayCurrentMoney());
+		account.feedMoney("5");
+		Assert.assertEquals("Current Money Provided:   $6.00", account.displayCurrentMoney());
+		account.feedMoney(null);
+		Assert.assertEquals("Current Money Provided:   $6.00", account.displayCurrentMoney());
+		account.feedMoney("");
+		Assert.assertEquals("Current Money Provided:   $6.00", account.displayCurrentMoney());
+		account.feedMoney("ssss");
+		Assert.assertEquals("Current Money Provided:   $6.00", account.displayCurrentMoney());
+		account.feedMoney("@#$");
+		Assert.assertEquals("Current Money Provided:   $6.00", account.displayCurrentMoney());
+		
+	}
+	
+	@Test
+	public void feed_money_functions_correctly() {
+		result = account.feedMoney(null);
+		for(String key: result.keySet()) {
+			Assert.assertEquals("\nPlease Retry Bill Entry\n", key);
+		}
+		result = account.feedMoney("");
+		for(String key: result.keySet()) {
+			Assert.assertEquals("\nPlease Retry Bill Entry\n", key);
+		}
+		result = account.feedMoney("!#$%@");
+		for(String key: result.keySet()) {
+			Assert.assertEquals("\nPlease Retry Bill Entry\n", key);
+		}
+		result = account.feedMoney("abCD");
+		for(String key: result.keySet()) {
+			Assert.assertEquals("\nPlease Retry Bill Entry\n", key);
+		}
+		result = account.feedMoney("3");
+		for(String key: result.keySet()) {
+			Assert.assertEquals("\nPlease Insert Valid Bill\n", key);
+		}
+		result = account.feedMoney("1");
+		for(String key: result.keySet()) {
+			String[] money = result.get(key);
+			Assert.assertEquals(" ", key);
+			Assert.assertEquals("0", money[0]);
+			Assert.assertEquals("1", money[1]);
+		}
+		result = account.feedMoney("2");
+		for(String key: result.keySet()) {
+			String[] money = result.get(key);
+			Assert.assertEquals(" ", key);
+			Assert.assertEquals("1", money[0]);
+			Assert.assertEquals("3", money[1]);
+		}
+		result = account.feedMoney("5");
+		for(String key: result.keySet()) {
+			String[] money = result.get(key);
+			Assert.assertEquals(" ", key);
+			Assert.assertEquals("3", money[0]);
+			Assert.assertEquals("8", money[1]);
+		}
+		result = account.feedMoney("10");
+		for(String key: result.keySet()) {
+			String[] money = result.get(key);
+			Assert.assertEquals(" ", key);
+			Assert.assertEquals("8", money[0]);
+			Assert.assertEquals("18", money[1]);
+		}
+		
+	}
+
+
+	@Test
+	public void purchase_returns_a_valid_map() {
+		account.feedMoney("10");
+		result = account.purchase("ZZ", "testProduct", "9.95");
+		for(String key: result.keySet()) {
+			String[] information = result.get(key);
+			Assert.assertEquals(" ", key);
+			Assert.assertEquals("testProduct", information[0]);
+			Assert.assertEquals("ZZ", information[1]);
+			Assert.assertEquals("10", information[2]);
+			Assert.assertEquals("0.05", information[3]);
+		}
+		
+	}
+
+	@Test
+	public void make_change_returns_correct_map_for_all_paths() {
+		result = account.makeChange();
+		for(String key: result.keySet()) {
+			String[] money = result.get(key);
+			Assert.assertEquals("No Change Necessary", key);
+			Assert.assertEquals("0", money[0]);
+			Assert.assertEquals("0", money[1]);
+		}
+		account.feedMoney("1");
+		account.purchase("ZZ", "testProduct", ".95");
+		result = account.makeChange();
+		for(String key: result.keySet()) {
+			String[] money = result.get(key);
+			Assert.assertEquals("Change is 1 Nickel", key);
+			Assert.assertEquals("0.05", money[0]);
+			Assert.assertEquals("0", money[1]);
+		}
+		account.feedMoney("1");
+		account.purchase("ZZ", "testProduct", ".90");
+		result = account.makeChange();
+		for(String key: result.keySet()) {
+			String[] money = result.get(key);
+			Assert.assertEquals("Change is 1 Dime", key);
+			Assert.assertEquals("0.10", money[0]);
+			Assert.assertEquals("0", money[1]);
+		}
+		account.feedMoney("1");
+		account.purchase("ZZ", "testProduct", ".85");
+		result = account.makeChange();
+		for(String key: result.keySet()) {
+			String[] money = result.get(key);
+			Assert.assertEquals("Change is 1 Dime and 1 Nickel", key);
+			Assert.assertEquals("0.15", money[0]);
+			Assert.assertEquals("0", money[1]);
+		}
+		account.feedMoney("1");
+		account.purchase("ZZ", "testProduct", ".80");
+		result = account.makeChange();
+		for(String key: result.keySet()) {
+			String[] money = result.get(key);
+			Assert.assertEquals("Change is 2 Dimes", key);
+			Assert.assertEquals("0.20", money[0]);
+			Assert.assertEquals("0", money[1]);
+		}
+		account.feedMoney("1");
+		account.purchase("ZZ", "testProduct", ".75");
+		result = account.makeChange();
+		for(String key: result.keySet()) {
+			String[] money = result.get(key);
+			Assert.assertEquals("Change is 1 Quarter", key);
+			Assert.assertEquals("0.25", money[0]);
+			Assert.assertEquals("0", money[1]);
+		}
+		account.feedMoney("1");
+		account.purchase("ZZ", "testProduct", ".70");
+		result = account.makeChange();
+		for(String key: result.keySet()) {
+			String[] money = result.get(key);
+			Assert.assertEquals("Change is 1 Quarter and 1 Nickel", key);
+			Assert.assertEquals("0.30", money[0]);
+			Assert.assertEquals("0", money[1]);
+		}
+		account.feedMoney("1");
+		account.purchase("ZZ", "testProduct", ".65");
+		result = account.makeChange();
+		for(String key: result.keySet()) {
+			String[] money = result.get(key);
+			Assert.assertEquals("Change is 1 Quarter and 1 Dime", key);
+			Assert.assertEquals("0.35", money[0]);
+			Assert.assertEquals("0", money[1]);
+		}
+		account.feedMoney("1");
+		account.purchase("ZZ", "testProduct", ".60");
+		result = account.makeChange();
+		for(String key: result.keySet()) {
+			String[] money = result.get(key);
+			Assert.assertEquals("Change is 1 Quarter, 1 Dime, and 1 Nickel", key);
+			Assert.assertEquals("0.40", money[0]);
+			Assert.assertEquals("0", money[1]);
+		}
+		account.feedMoney("1");
+		account.purchase("ZZ", "testProduct", ".55");
+		result = account.makeChange();
+		for(String key: result.keySet()) {
+			String[] money = result.get(key);
+			Assert.assertEquals("Change is 1 Quarter and 2 Dimes", key);
+			Assert.assertEquals("0.45", money[0]);
+			Assert.assertEquals("0", money[1]);
+		}
+		account.feedMoney("1");
+		account.purchase("ZZ", "testProduct", ".50");
+		result = account.makeChange();
+		for(String key: result.keySet()) {
+			String[] money = result.get(key);
+			Assert.assertEquals("Change is 2 Quarters", key);
+			Assert.assertEquals("0.50", money[0]);
+			Assert.assertEquals("0", money[1]);
+		}
+		account.feedMoney("1");
+		account.purchase("ZZ", "testProduct", ".45");
+		result = account.makeChange();
+		for(String key: result.keySet()) {
+			String[] money = result.get(key);
+			Assert.assertEquals("Change is 2 Quarters and 1 Nickel", key);
+			Assert.assertEquals("0.55", money[0]);
+			Assert.assertEquals("0", money[1]);
+		}
+		account.feedMoney("1");
+		account.purchase("ZZ", "testProduct", ".40");
+		result = account.makeChange();
+		for(String key: result.keySet()) {
+			String[] money = result.get(key);
+			Assert.assertEquals("Change is 2 Quarters and 1 Dime", key);
+			Assert.assertEquals("0.60", money[0]);
+			Assert.assertEquals("0", money[1]);
+		}
+		account.feedMoney("1");
+		account.purchase("ZZ", "testProduct", ".35");
+		result = account.makeChange();
+		for(String key: result.keySet()) {
+			String[] money = result.get(key);
+			Assert.assertEquals("Change is 2 Quarters, 1 Dime, and 1 Nickel", key);
+			Assert.assertEquals("0.65", money[0]);
+			Assert.assertEquals("0", money[1]);
+		}
+		account.feedMoney("1");
+		account.purchase("ZZ", "testProduct", ".30");
+		result = account.makeChange();
+		for(String key: result.keySet()) {
+			String[] money = result.get(key);
+			Assert.assertEquals("Change is 2 Quarters and 2 Dimes", key);
+			Assert.assertEquals("0.70", money[0]);
+			Assert.assertEquals("0", money[1]);
+		}
+		account.feedMoney("1");
+		account.purchase("ZZ", "testProduct", ".25");
+		result = account.makeChange();
+		for(String key: result.keySet()) {
+			String[] money = result.get(key);
+			Assert.assertEquals("Change is 3 Quarters", key);
+			Assert.assertEquals("0.75", money[0]);
+			Assert.assertEquals("0", money[1]);
+		}
+		account.feedMoney("1");
+		account.purchase("ZZ", "testProduct", ".20");
+		result = account.makeChange();
+		for(String key: result.keySet()) {
+			String[] money = result.get(key);
+			Assert.assertEquals("Change is 3 Quarters and 1 Nickel", key);
+			Assert.assertEquals("0.80", money[0]);
+			Assert.assertEquals("0", money[1]);
+		}
+		account.feedMoney("1");
+		account.purchase("ZZ", "testProduct", ".15");
+		result = account.makeChange();
+		for(String key: result.keySet()) {
+			String[] money = result.get(key);
+			Assert.assertEquals("Change is 3 Quarters and 1 Dime", key);
+			Assert.assertEquals("0.85", money[0]);
+			Assert.assertEquals("0", money[1]);
+		}
+		account.feedMoney("1");
+		account.purchase("ZZ", "testProduct", ".10");
+		result = account.makeChange();
+		for(String key: result.keySet()) {
+			String[] money = result.get(key);
+			Assert.assertEquals("Change is 3 Quarters, 1 Dime, and 1 Nickel", key);
+			Assert.assertEquals("0.90", money[0]);
+			Assert.assertEquals("0", money[1]);
+		}
+		account.feedMoney("1");
+		account.purchase("ZZ", "testProduct", ".05");
+		result = account.makeChange();
+		for(String key: result.keySet()) {
+			String[] money = result.get(key);
+			Assert.assertEquals("Change is 3 Quarters and 2 Dimes", key);
+			Assert.assertEquals("0.95", money[0]);
+			Assert.assertEquals("0", money[1]);
+		}
+		account.feedMoney("1");
+		result = account.makeChange();
+		for(String key: result.keySet()) {
+			String[] money = result.get(key);
+			Assert.assertEquals("Change is 4 Quarters", key);
+			Assert.assertEquals("1", money[0]);
+			Assert.assertEquals("0", money[1]);
+		}
+		
+	}
+	
+	
+	
+	
+	
+	
+	
+}

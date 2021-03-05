@@ -64,7 +64,7 @@ public class Accountant {
 	} // end method
 
 	public Map<String, String[]> purchase(String slot, String name, String selectionPrice) {
-		Map<String, String[]> logMap= new HashMap<>();
+		Map<String, String[]> logMap = new HashMap<>();
 		String[] data = new String[4];
 		String result;
 		String startingMoney = getCurrentMoney().toString();
@@ -101,9 +101,9 @@ public class Accountant {
 			current = current - numberOfQuarters * quarter;
 			if (remainder == 0) {
 				if (numberOfQuarters == 1) {
-					result = "Change is 1 Quarter.";
+					result = "Change is 1 Quarter";
 				} else {
-					result = "Change is " + numberOfQuarters + " Quarters.";
+					result = "Change is " + numberOfQuarters + " Quarters";
 				} // end all possible quarter only return statements
 			} else {
 				remainder = current % dime;
@@ -111,38 +111,32 @@ public class Accountant {
 				current = current - numberOfDimes * dime;
 				if (remainder == 0) {
 					if (numberOfQuarters == 0 && numberOfDimes == 1) {
-						result = "Change is 1 Dime.";
-					} else if (numberOfQuarters == 0 && numberOfDimes > 1) {
-						result = "Change is " + numberOfDimes + " Dimes.";
+						result = "Change is 1 Dime";
+					} else if (numberOfQuarters == 0 && numberOfDimes == 2) {
+						result = "Change is 2 Dimes";
 					} else if (numberOfQuarters == 1 && numberOfDimes == 1) {
-						result = "Change is 1 Quarter and 1 Dime.";
+						result = "Change is 1 Quarter and 1 Dime";
+					} else if (numberOfQuarters == 1 && numberOfDimes == 2) {
+						result = "Change is 1 Quarter and 2 Dimes";
 					} else if (numberOfQuarters > 1 && numberOfDimes == 1) {
 						result = "Change is " + numberOfQuarters + " Quarters and 1 Dime";
 					} else {
-						result = "Change is " + numberOfQuarters + " Quarters and " + numberOfDimes
-								+ " Dimes.";
-					} // end all possible quarter and dime return situations
+						result = "Change is " + numberOfQuarters + " Quarters and 2 Dimes";
+					}  // end all possible quarter and dime return situations
 				} else {
 					if (numberOfQuarters == 0 && numberOfDimes == 0) {
-						result = "Change is 1 Nickel.";
+						result = "Change is 1 Nickel";
 					} else if (numberOfQuarters == 1 && numberOfDimes == 0) {
-						result = "Change is 1 Quarter and 1 Nickel.";
+						result = "Change is 1 Quarter and 1 Nickel";
 					} else if (numberOfQuarters > 1 && numberOfDimes == 0) {
-						result = "Change is " + numberOfQuarters + " Quarters and 1 Nickel.";
+						result = "Change is " + numberOfQuarters + " Quarters and 1 Nickel";
 					} else if (numberOfQuarters == 0 && numberOfDimes == 1) {
-						result = "Change is 1 Dime and 1 Nickel.";
-					} else if (numberOfQuarters == 0 && numberOfDimes > 1) {
-						result = "Change is " + numberOfDimes + " Dimes and 1 Nickel.";
+						result = "Change is 1 Dime and 1 Nickel";
 					} else if (numberOfQuarters == 1 && numberOfDimes == 1) {
-						result = "Change is 1 Quarter, 1 Dime, and 1 Nickel.";
-					} else if (numberOfQuarters == 1 && numberOfDimes > 1) {
-						result = "Change is 1 Quarter, " + numberOfDimes + " Dimes, and 1 Nickel.";
-					} else if (numberOfQuarters > 1 && numberOfDimes == 1) {
-						result = "Change is " + numberOfQuarters + " Quarters, 1 Dime, and 1 Nickel.";
+						result = "Change is 1 Quarter, 1 Dime, and 1 Nickel";
 					} else {
-						result = "Change is " + numberOfQuarters + " Quarters, " + numberOfDimes
-								+ " Dimes, and 1 Nickel.";
-					}
+						result = "Change is " + numberOfQuarters + " Quarters, 1 Dime, and 1 Nickel";
+					} 
 				} // end third if-else for nickels
 			} // end second if-else for dimes
 		} // end first if-else for quarters
