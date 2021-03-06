@@ -42,11 +42,12 @@ public class VendingMachineItem {
 	}
 	
 	public String getName(String slot) {
+		String name = "";
 		for (VendingMachineItem product : productData) {
 			if(product.getSlot().equals(slot)) {
-				return product.getName();
+				name = product.getName();
 			}
-		} return "";
+		} return name;
 	}
 
 	public String getPrice() {
@@ -54,17 +55,24 @@ public class VendingMachineItem {
 	}
 	
 	public String getPrice(String slot) {
+		String price = "";
 		for (VendingMachineItem product : productData) {
 			if(product.getSlot().equals(slot)) {
-				return product.getPrice();
+				price = product.getPrice();
 			}	
-		} return "";
+		} return price;
 	}
 
 	public String getCategory() {
 		return category;
 	}
 
+	public boolean validateSlot(String input) {
+		if(inventoryMap.containsKey(input)) {
+			return true;
+		} return false;
+	} 
+	
 	public int getCount(String slot) {
 		return getInventoryMap().get(slot).get(slot).size();
 	}
@@ -77,26 +85,16 @@ public class VendingMachineItem {
 	} // end adjustInventory()
 
 	public String getMessage(String category) {
-		String message = "";
-		if (getCategory() == null || getCategory().equals("")) {
-			return message;
-		} else if (getCategory().equals("Chip")) {
-			message = "\"Crunch Crunch, Yum!\"";
+		if (getCategory().equals("Chip")) {
+			return "\"Crunch Crunch, Yum!\"";
 		} else if (getCategory().equals("Candy")) {
-			message = "\"Munch Munch, Yum!\"";
+			return "\"Munch Munch, Yum!\"";
 		} else if (getCategory().equals("Drink")) {
-			message = "\"Glug Glug, Yum!\"";
-		} else if (getCategory().equals("Gum")) {
-			message = "\"Chew Chew, Yum!\"";
-		}
-		return message;
+			return "\"Glug Glug, Yum!\"";
+		} else {
+			return "\"Chew Chew, Yum!\"";
+		} 
 	} // end getMessage()
-
-	public boolean validateSlot(String input) {
-		if(inventoryMap.containsKey(input)) {
-			return true;
-		} return false;
-	} 
 
 	public String displayItemsAndInventory() {
 		String count = "";

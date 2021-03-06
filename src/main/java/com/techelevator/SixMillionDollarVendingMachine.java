@@ -1,6 +1,6 @@
 package com.techelevator;
 
-public class VendoMatic800 {
+public class SixMillionDollarVendingMachine {
 
 	public static void main(String[] args) {	
 		MainMenu mainMenu = new MainMenu(new Console(System.in, System.out), new VendingMachineItem(), new Accountant());

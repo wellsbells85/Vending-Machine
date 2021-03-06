@@ -76,17 +76,10 @@ public class Console {
 		out.println("Code       Name           Price");
 		out.println("===============================");
 		out.println(products);
-		out.println();
+		out.println("\n");
 		out.print(System.lineSeparator() + "Please choose an option >>> ");
 		out.flush();
 		return in.nextLine();
-	}
-	
-	public void displayInventoryProducts(String products) {
-		out.println("Code       Name           Price  Quantity");
-		out.println("==========================================");
-		out.println(products);
-		out.flush();
 	}
 	
 	public String displayFeedMoney() {
@@ -102,6 +95,12 @@ public class Console {
 			out.flush();
 		}		
 	}
+	public void displayInventoryProducts(String products) {
+		out.println("Code       Name           Price  Quantity");
+		out.println("==========================================");
+		out.println(products);
+		out.flush();
+	}
 	
 	public void displayChange(Map<String, String[]> input) {
 		for(String key: input.keySet()) {
@@ -112,38 +111,45 @@ public class Console {
 	}
 	
 	public void displaySale(String products) {
-		System.out.println();
-		System.out.println(products);
-		System.out.println();
+		out.println();
+		out.println(products);
+		out.println();
+		out.flush();
 	} 
 	
 	public void displayValidation() {
-		System.out.println("");
-		System.out.println("Invalid Selection");
-		System.out.println("");
+		out.println("");
+		out.println("Invalid Selection");
+		out.println("");
+		out.flush();
 	}
 
 	public void displayNoFunds() {
-		System.out.println("");
-		System.out.println("Insufficient Funds");
-		System.out.println("");
+		out.println("");
+		out.println("Insufficient Funds");
+		out.println("");
+		out.flush();
 	}
 	
 	public void displaySoldOut() {
-		System.out.println("");
-		System.out.println("SOLD OUT");
-		System.out.println("");
+		out.println("");
+		out.println("SOLD OUT");
+		out.println("");
+		out.flush();
 	}
 	
 	public void message(String message) {
-		System.out.println(message);
+		out.println(message);
+		out.flush();
 	}
 	
 	public void displayClosing() {
-		System.out.println("Thank You, Have a Nice Day!");
+		out.println("Thank You, Have a Nice Day!");
+		out.flush();
 	} 
 	
 	public void displayBlank() {
-		System.out.println("");
+		out.println("");
+		out.flush();
 	}
 } //end class

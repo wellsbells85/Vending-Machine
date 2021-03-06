@@ -1,7 +1,5 @@
 package com.techelevator;
 
-import java.math.BigDecimal;
-import java.util.LinkedHashMap;
 import java.util.Map;
 
 import org.junit.After;
@@ -11,7 +9,6 @@ import org.junit.Test;
 
 public class AccountantTest {
 	
-
 	private Accountant account;
 	private Map<String, String[]> result;
 	
@@ -35,7 +32,6 @@ public class AccountantTest {
 	@Test
 	public void display_current_money_functions_correctly() {
 		Assert.assertEquals("Current Money Provided:   $0.00", account.displayCurrentMoney());
-		//Arrange
 		account.feedMoney("1");
 		Assert.assertEquals("Current Money Provided:   $1.00", account.displayCurrentMoney());
 		account.feedMoney("5");
@@ -103,7 +99,6 @@ public class AccountantTest {
 		}
 		
 	}
-
 
 	@Test
 	public void purchase_returns_a_valid_map() {
