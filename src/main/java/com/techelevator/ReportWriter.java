@@ -19,6 +19,9 @@ public class ReportWriter {
 	private static final String VENDING_FILE = "vendingmachine.csv";
 	private static final String REPORT_FILE = "SalesReportMaster.txt";
 
+	/**
+	* Initializes SalesReportMaster.txt if it doesn't exist
+	*/
 	public static void createReport() {
 		File reportName = new File("SalesReportMaster.txt");
 		try {
@@ -27,6 +30,11 @@ public class ReportWriter {
 		}
 	}
 
+	/**
+	* Scans .csv file to get data use to initialize 
+	* the SalesReportMaster. This method is only called
+	* the first time the machine is booted up.
+	*/
 	public static void salesReportInitializer() {
 		File vendingFile = new File(VENDING_FILE);
 		try (Scanner fileScanner = new Scanner(vendingFile);
@@ -44,6 +52,11 @@ public class ReportWriter {
 		} // end try-catch
 	} // end salesReportInitializer()
 
+	/**
+	* Scans .csv file to get data use to initialize 
+	* the SalesReportMaster. This method is only called
+	* the first time the machine is booted up.
+	*/
 	public static void masterReportWriter(String product, BigDecimal newSales) {
 		File salesReport = new File(REPORT_FILE);
 		if (salesReport.length() == 0) {
@@ -62,6 +75,10 @@ public class ReportWriter {
 		stringData.setLength(0);
 	} // end masterReportWriter()
 
+	/**
+	* Scans the SalesReportMaster to store each
+	* individual line in a StringBuffer.
+	*/
 	public static boolean readReportFile() {
 		try (Scanner fileToRead = new Scanner(new File(REPORT_FILE))) {
 			for (String line; fileToRead.hasNextLine() && (line = fileToRead.nextLine()) != null;) {
@@ -74,6 +91,17 @@ public class ReportWriter {
 		}
 	}
 
+	/**
+	* Takes the received product and sales. Updates the product
+	* count by one, and adds the newSales to the totalSales that 
+	* already exist in the file. The info is compared to the data
+	* in the StringBuffer. It pulls out the count, parses to 
+	* Integer to perform math, then rewrites the string in-line.
+	* Performs same to sales using BigDecimal NumberFormat.
+	* 
+	*  @param product, newSales
+	* 
+	*/
 	public static void updateSalesReport(String product, BigDecimal newSales) {
 		try (Scanner fileToRead = new Scanner(new File(REPORT_FILE))) {
 			int startIndex;
@@ -104,6 +132,12 @@ public class ReportWriter {
 		}
 	}
 
+	/**
+	* Scans the SalesReportMaster.txt file to make an
+	* on the fly exact copy. It adds the time-date 
+	* stamped name using ISO 8601 convention. The 
+	* format YYYY-MM-DDTHHmmSS is in 24HR clock.
+	*/
 	public static void timeStampedReport() {
 		LocalDateTime time = LocalDateTime.now();
 		String fileName = reportDate.format(time) + "T" + reportTime.format(time) + " SalesReport.txt";

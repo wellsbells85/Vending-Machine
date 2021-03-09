@@ -14,6 +14,9 @@ public class LogWriter {
 	
 	private static DateTimeFormatter logFormat = DateTimeFormatter.ofPattern("MM/dd/yyyy hh:mm:ss a");
 
+	/**
+	* Initializes Log.txt if it doesn't exist
+	*/
 	public static void createLog() {
 		File logName = new File("Log.txt"); 
 		try{
@@ -22,6 +25,13 @@ public class LogWriter {
 		} 
 	}
 	
+	/**
+	* Formats the message received from MainMenu,
+	* that was sent from Accountant. Sends formatted
+	* string to logWriter().
+	* 
+	* @param input
+	*/
 	public static void feedMoneyLog(Map<String, String[]> input) {
 		if(input.containsKey(" ")){
 			String[] money = input.get(" ");
@@ -33,6 +43,13 @@ public class LogWriter {
 		} 
 	} //end feedMoneyLog()
 	
+	/**
+	* Formats the message received from MainMenu,
+	* that was sent from Accountant. Sends formatted
+	* string to logWriter().
+	* 
+	* @param input
+	*/
 	public static void makeChangeLog(Map<String, String[]> input) {
 		for(String key: input.keySet()) {
 			String[] money = input.get(key);
@@ -44,6 +61,13 @@ public class LogWriter {
 		} 
 	} //end makeChangeLog()
 	
+	/**
+	* Formats the message received from MainMenu,
+	* that was sent from Accountant. Sends formatted
+	* string to logWriter().
+	* 
+	* @param input
+	*/
 	public static void purchaseLog(Map<String, String[]> input) {
 		for(String key: input.keySet()) {
 			String[] data = input.get(key);
@@ -57,6 +81,13 @@ public class LogWriter {
 		} //end for loop
 	} //end purchaseLog()
 
+	/**
+	* Prints the formatted message received from 
+	* this class to Log.txt. Prints error message
+	* if exception caught. 
+	* 
+	* @param message
+	*/
 	public static void logWriter(String message) {
 		LocalDateTime time = LocalDateTime.now();
 		try (PrintWriter writer = new PrintWriter(new FileWriter("Log.txt", true ))) { // changed this to true so it adds to the list in the file

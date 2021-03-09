@@ -2,10 +2,7 @@ package com.techelevator;
 
 import java.math.BigDecimal;
 import java.text.NumberFormat;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
 import java.util.Map;
 
 public class Accountant {
@@ -16,6 +13,11 @@ public class Accountant {
 		return currentMoney;
 	}
 	
+	/**
+	* Creates formatted string of the current balance.
+	* 
+	* @return String currentMoneyDisplay
+	*/
 	public String displayCurrentMoney() {
 		BigDecimal current = getCurrentMoney();
 		String currentMoneyDisplay = "Current Money Provided:"
@@ -23,6 +25,12 @@ public class Accountant {
 		return currentMoneyDisplay;
 	}
 	
+	/**
+	* Checks if the user has enough funds for a purchase.
+	* 
+	* @param selectionPrice
+	* @return boolean
+	*/
 	public boolean checkFunds(String selectionPrice) {
 		BigDecimal price = new BigDecimal(selectionPrice);
 		if(getCurrentMoney().compareTo(price) < 0) {
@@ -30,6 +38,15 @@ public class Accountant {
 		} return true;
 	}
 	
+	/**
+	* Validates if a user put in a valid amount of money.
+	* Uses the String key as error messages. If valid the key
+	* is " ". Invalid inputs return the original balances, while
+	* valid inputs return an updated starting and current balance.
+	* 
+	* @param input
+	* @return Map<String, String[]> logMap
+	*/
 	public Map<String, String[]> feedMoney(String input) {
 		Map<String, String[]> logMap= new HashMap<>();
 		String[] money = new String[2];
@@ -63,6 +80,14 @@ public class Accountant {
 		}
 	} // end method
 
+	/**
+	* Accepts the data necessary to create a purchase String[] to be 
+	* sent to the Report Writer. Updates the current balance. Stores 
+	* all relevant data, and returns to MainMenu to be passed along.
+	* 
+	* @param slot, name, selectionPrice
+	* @return Map<String, String[]> logMap
+	*/
 	public Map<String, String[]> purchase(String slot, String name, String selectionPrice) {
 		Map<String, String[]> logMap = new HashMap<>();
 		String[] data = new String[4];
@@ -80,6 +105,14 @@ public class Accountant {
 		return logMap;
 	}// end purchase()
 
+	/**
+	* Creates a string for the correct amount of change given.
+	* Stores that as the key in a map. The String[] contains the
+	* starting and ending(always == 0) balances. This is returned
+	* to MainMenu to be passed on to ReportWriter.
+	* 
+	* @return Map<String, String[]> logMap
+	*/
 	public Map<String, String[]> makeChange() {
 		Map<String, String[]> logMap= new HashMap<>();
 		String[] money = new String[2];

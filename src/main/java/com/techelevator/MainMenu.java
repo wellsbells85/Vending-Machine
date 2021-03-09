@@ -17,20 +17,29 @@ public class MainMenu {
 	
 	private Accountant account;
 	private VendingMachineItem vend;
-	private Console console;
+	private ConsoleService console;
 	
-	public MainMenu(Console console, VendingMachineItem vend, Accountant account) {
+	public MainMenu(ConsoleService console, VendingMachineItem vend, Accountant account) {
 		this.account = account;
 		this.vend = vend;
 		this.console = console;
 	}
 	
+	/**
+	* Boots up the machine
+	* Creates Vending Machine List with 5 Items each.
+	* Initializes first Sales Report if it doesn't already exist.
+	* Initializes first Log file if it doesn't already exist.
+	*/
 	public void initialize() {
 		vend.initializeVendingMachineList();
 		ReportWriter.masterReportWriter("", BigDecimal.ZERO);
 		LogWriter.createLog();
 	}
 
+	/**
+	* Creates main menu screen.
+	*/
 	public void runMainMenu() {
 		while (true) {
 			String choice = (String)console.getChoiceFromOptions(MAIN_MENU);
@@ -46,6 +55,9 @@ public class MainMenu {
 		}
 	} //end runMainMenu()
 	
+	/**
+	* Creates purchase menu screen.
+	*/
 	public void runPurchaseMenu() {
 		while (true) {
 			console.message(account.displayCurrentMoney());
@@ -60,6 +72,12 @@ public class MainMenu {
 		}
 	} //end runPurchaseMenu()
 	
+	
+	/**
+	* Controls input of money. Takes user input.
+	* Sends information to Accountant. 
+	* Displays errors and/or new balance.
+	*/
 	public void feedMoney() {
 		String currency = console.displayFeedMoney();
 		Map<String, String[]> result = account.feedMoney(currency);
@@ -67,6 +85,14 @@ public class MainMenu {
 		console.displayFeedMoneyReturn(result);
 	}
 	
+	/**
+	* Controls sale of product. Takes user slot input.
+	* Sends information to VendingMachineItem to validate location. 
+	* If valid slot, sends info to Accountant to validate balance.
+	* If both are valid it initiates a purchase, sends data to Log
+	* and Report Writers to record permanently.
+	* Displays errors if any arise.
+	*/
 	public void makePurchase() {
 		String slot = console.selectProducts(vend.displayProducts()).toUpperCase();
 		if (vend.validateSlot(slot) == false) {
@@ -84,6 +110,9 @@ public class MainMenu {
 		} //end if-else if-else if
 	}
 	
+	/**
+	* Makes change for user. Prints record in Log.
+	*/
 	public void finishTransaction() {
 		Map<String, String[]> result = account.makeChange();
 		console.displayChange(result);
@@ -91,6 +120,9 @@ public class MainMenu {
 		runMainMenu();
 	}
 		
+	/**
+	* Closes program.
+	*/
 	public void exitProgram() {
 		console.displayClosing();
 		System.exit(0);

@@ -41,6 +41,15 @@ public class VendingMachineItem {
 		return name;
 	}
 	
+	/**
+	* References productData to get the Product Name
+	* based on it's slot. It's done this way because 
+	* the List itself depletes as Items are sold, 
+	* causing a NullPointerException when count == 0.
+	* 
+	* @param slot
+	* @return String name
+	*/
 	public String getName(String slot) {
 		String name = "";
 		for (VendingMachineItem product : productData) {
@@ -54,6 +63,15 @@ public class VendingMachineItem {
 		return price;
 	}
 	
+	/**
+	* References productData to get the Product Price
+	* based on it's slot. It's done this way because 
+	* the List itself depletes as Items are sold, 
+	* causing a NullPointerException when count == 0.
+	* 
+	* @param slot
+	* @return String price
+	*/
 	public String getPrice(String slot) {
 		String price = "";
 		for (VendingMachineItem product : productData) {
@@ -67,23 +85,43 @@ public class VendingMachineItem {
 		return category;
 	}
 
+	/**
+	* Determines if a slot is a valid input by
+	* checking the inventoryMap KeySet.
+	* 
+	* @param input
+	* @return boolean
+	*/
 	public boolean validateSlot(String input) {
 		if(inventoryMap.containsKey(input)) {
 			return true;
 		} return false;
 	} 
 	
+	/**
+	* Checks the actual count of items in the InventoryMap.
+	*/
 	public int getCount(String slot) {
 		return getInventoryMap().get(slot).get(slot).size();
 	}
 
-	// method to decrement inventory correctly
+	/**
+	* Checks the actual count of items in the InventoryMap.
+	* If there is a sellable item, it pops it off the map.
+	*/
 	public void setCount(String slot) {
 		if (getCount(slot) > 0) {
 			this.inventoryMap.get(slot).get(slot).pollLast();
 		}
 	} // end adjustInventory()
 
+	/**
+	* Compares item categories to stored messages,
+	* in order to return correct string.
+	* 
+	* @param category
+	* @return String message
+	*/
 	public String getMessage(String category) {
 		if (getCategory().equals("Chip")) {
 			return "\"Crunch Crunch, Yum!\"";
@@ -96,6 +134,13 @@ public class VendingMachineItem {
 		} 
 	} // end getMessage()
 
+	/**
+	* Checks inventory items and creates a formatted
+	* string of all items with their count. If the count is 
+	* ZERO it displays SOLD OUT to the user.
+	* 
+	* return String productsAndInventory
+	*/
 	public String displayItemsAndInventory() {
 		String count = "";
 		String productAndInventory = "";
@@ -113,7 +158,11 @@ public class VendingMachineItem {
 		return productAndInventory;
 	} // end method
 
-	// method to produce entire list of products
+	/**
+	* Creates a formatted string of all products. 
+	* 
+	* @return String productList
+	*/
 	public String displayProducts() {
 		String productList = "";
 		for (VendingMachineItem product : productData) {
@@ -124,6 +173,12 @@ public class VendingMachineItem {
 		return productList;
 	} // end displayProducts()
 	
+	/**
+	* Creates a formatted string of a product that was
+	* recently purchased.
+	* 
+	* @return String productInfo
+	*/
 	public String getSoldProduct(String slot) {
 		String productInfo = "";
 		for (VendingMachineItem product : productData) {
@@ -137,7 +192,12 @@ public class VendingMachineItem {
 		return productInfo;
 	} // end getSoldProduct()
 
-	// method that creates Vending Machine Items List from the "vendingmachine.csv"
+	/**
+	* Scans .csv file to get data use to initialize the inventoryMap. 
+	* This method is only called the when the MainMenu class is first 
+	* called. If all items are sold out, it won't replenish until the
+	* program is restarted. Creates FIVE of each item.
+	*/
 	public void initializeVendingMachineList() {
 		File vendFile = new File("vendingmachine.csv");
 		String[] data;
